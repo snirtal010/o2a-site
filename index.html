@@ -47,9 +47,15 @@
         </div>
       </div>
       <figure class="chart-card" style="margin:0">
-        <div class="chart-head"><span><b>XAUUSD</b> · 1m · Stochastic [o2a v2.00]</span><span>TradingView</span></div>
-        <img class="hero-shot" src="img/stochastic.jpg" width="1600" height="805" alt="Stochastic [o2a v2.00] on XAUUSD 1-minute: reversal and double-bottom signals on the chart, session VWAP bands, and the oscillator pane with its status table">
-        <figcaption class="legend"><span>Real TradingView chart · Stochastic [o2a v2.00] · XAUUSD 1m</span></figcaption>
+        <div class="chart-head"><span><b>XAUUSD</b> · 1m · Stochastic [o2a v2.00]</span><span>VWAP ±1σ ±2σ ±3σ</span></div>
+        <canvas id="hero" role="img" aria-label="Example chart: candles with a session VWAP and three dotted sigma bands, reversal markers, and a stochastic pane with 95 and 5 levels underneath."></canvas>
+        <figcaption class="legend">
+          <span><i style="border-color:var(--vwap)"></i>VWAP</span>
+          <span><i style="border-color:var(--band1);border-top-style:dotted"></i>±1σ</span>
+          <span><i style="border-color:var(--band2);border-top-style:dotted"></i>±2σ</span>
+          <span><i style="border-color:var(--band3);border-top-style:dotted"></i>±3σ</span>
+          <span>▲▼ REV signals · illustration, not market data</span>
+        </figcaption>
       </figure>
     </div>
   </section>
@@ -69,43 +75,43 @@
       <div class="cards" id="cards">
         <article class="card" data-mt5="1">
           <div class="meta"><h3>Stochastic</h3><span class="ver">v2.00</span></div>
-          <a href="indicators/stochastic.html" aria-label="Stochastic details"><img class="thumb" src="img/stochastic.jpg" loading="lazy" alt="Stochastic on a TradingView chart"></a>
+          <a href="indicators/stochastic.html" aria-label="Stochastic details"><canvas class="mini" data-spark="stoch" data-seed="3" aria-hidden="true"></canvas></a>
           <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Oscillator · VWAP</span><p>A Stochastic that marks overbought/oversold exits, double tops/bottoms with liquidity grabs, and higher-timeframe signals.</p></div>
           <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/stochastic.html" style="margin-left:auto">Details →</a></div>
         </article>
         <article class="card" data-mt5="1">
           <div class="meta"><h3>Butterfly</h3><span class="ver">v1.00</span></div>
-          <a href="indicators/butterfly.html" aria-label="Butterfly details"><img class="thumb" src="img/butterfly.jpg" loading="lazy" alt="Butterfly on a TradingView chart"></a>
+          <a href="indicators/butterfly.html" aria-label="Butterfly details"><canvas class="mini" data-spark="pattern" data-seed="4" aria-hidden="true"></canvas></a>
           <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Harmonic pattern</span><p>Finds Butterfly harmonic patterns on a higher timeframe and marks the reversal zone, entry signals and single-target positions.</p></div>
           <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/butterfly.html" style="margin-left:auto">Details →</a></div>
         </article>
         <article class="card" data-mt5="1">
           <div class="meta"><h3>AB=CD Pattern</h3><span class="ver"></span></div>
-          <a href="indicators/abcd.html" aria-label="AB=CD Pattern details"><img class="thumb" src="img/abcd.jpg" loading="lazy" alt="AB=CD Pattern on a TradingView chart"></a>
+          <a href="indicators/abcd.html" aria-label="AB=CD Pattern details"><canvas class="mini" data-spark="pattern" data-seed="5" aria-hidden="true"></canvas></a>
           <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Harmonic pattern</span><p>Detects AB=CD swing patterns, draws the reversal zone at D, and tracks rejection and break-and-retest signals with targets.</p></div>
           <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/abcd.html" style="margin-left:auto">Details →</a></div>
         </article>
         <article class="card" data-mt5="1">
           <div class="meta"><h3>HTF Inside Bar</h3><span class="ver">r1.08</span></div>
-          <a href="indicators/htf-inside-bar.html" aria-label="HTF Inside Bar details"><img class="thumb" src="img/insidebar.jpg" loading="lazy" alt="HTF Inside Bar on a TradingView chart"></a>
+          <a href="indicators/htf-inside-bar.html" aria-label="HTF Inside Bar details"><canvas class="mini" data-spark="bars" data-seed="6" aria-hidden="true"></canvas></a>
           <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Price action · HTF</span><p>Finds inside-bar patterns on a higher timeframe, filters them, and plans the breakout entry, stop and three targets.</p></div>
           <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/htf-inside-bar.html" style="margin-left:auto">Details →</a></div>
         </article>
         <article class="card" data-mt5="1">
           <div class="meta"><h3>Strong S&amp;R</h3><span class="ver">r1.01</span></div>
-          <a href="indicators/strong-sr.html" aria-label="Strong S&amp;R details"><img class="thumb" src="img/strongsr.jpg" loading="lazy" alt="Strong S&amp;R on a TradingView chart"></a>
+          <a href="indicators/strong-sr.html" aria-label="Strong S&amp;R details"><canvas class="mini" data-spark="levels" data-seed="7" aria-hidden="true"></canvas></a>
           <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Levels</span><p>Draws the strongest support and resistance levels from higher-timeframe swings, scored by touches and fading with age.</p></div>
           <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/strong-sr.html" style="margin-left:auto">Details →</a></div>
         </article>
         <article class="card" data-mt5="0">
           <div class="meta"><h3>HTF Candle Patterns</h3><span class="ver"></span></div>
-          <a href="indicators/htf-candle-patterns.html" aria-label="HTF Candle Patterns details"><img class="thumb" src="img/htfcandles.jpg" loading="lazy" alt="HTF Candle Patterns on a TradingView chart"></a>
+          <a href="indicators/htf-candle-patterns.html" aria-label="HTF Candle Patterns details"><canvas class="mini" data-spark="bars" data-seed="8" aria-hidden="true"></canvas></a>
           <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Price action · HTF</span><p>Spots engulfing and inverse engulfing patterns on higher-timeframe candles and shows them on your chart.</p></div>
           <div class="foot"><span class="pill">TradingView</span><a class="more" href="indicators/htf-candle-patterns.html" style="margin-left:auto">Details →</a></div>
         </article>
         <article class="card" data-mt5="0">
           <div class="meta"><h3>MSO MTF</h3><span class="ver">v2.16</span></div>
-          <a href="indicators/mso-mtf.html" aria-label="MSO MTF details"><img class="thumb" src="img/mso.jpg" loading="lazy" alt="MSO MTF on a TradingView chart"></a>
+          <a href="indicators/mso-mtf.html" aria-label="MSO MTF details"><canvas class="mini" data-spark="stoch" data-seed="9" aria-hidden="true"></canvas></a>
           <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Multi-timeframe structure</span><p>A market-structure oscillator on three timeframes, with structure breaks, reversal zones, big candles, trend tracking and a confluence dashboard.</p></div>
           <div class="foot"><span class="pill">TradingView</span><span class="pill status">MT5 in testing</span><a class="more" href="indicators/mso-mtf.html" style="margin-left:auto">Details →</a></div>
         </article>
@@ -259,6 +265,92 @@
       .then(function (r) { if (!r.ok) throw new Error(String(r.status)); out.className = "sent"; out.textContent = "Thanks, " + n + ". We received your request and will reply by email."; form.reset(); })
       .catch(function () { out.className = ""; out.textContent = "Sending failed. Check your connection and try again."; });
   });
+})();
+</script><script>
+(function () {
+  "use strict";
+  // ---- drawing helpers
+  function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  function rng(seed) { var s = seed * 9301 + 49297; return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+  function fit(cv) { var r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1; cv.width = Math.max(1, r.width * d); cv.height = Math.max(1, r.height * d); var x = cv.getContext("2d"); x.setTransform(d, 0, 0, d, 0, 0); return { x: x, w: r.width, h: r.height }; }
+
+  // ---- hero: candles + VWAP + dotted bands + stochastic pane (deterministic illustration)
+  var N = 120, R = rng(7), bars = [], p = 4120;
+  for (var i = 0; i < N; i++) {
+    var drift = Math.sin(i / 14) * 0.9 + (R() - 0.5) * 2.6;
+    var o = p, c = o + drift, h = Math.max(o, c) + R() * 1.6, l = Math.min(o, c) - R() * 1.6;
+    bars.push({ o: o, h: h, l: l, c: c, v: 0.6 + R() }); p = c;
+  }
+  var vw = [], sd = [], pv = 0, vv = 0, p2 = 0;
+  bars.forEach(function (b) { var tp = (b.h + b.l + b.c) / 3; pv += tp * b.v; vv += b.v; p2 += tp * tp * b.v; var m = pv / vv; vw.push(m); sd.push(Math.sqrt(Math.max(0, p2 / vv - m * m))); });
+  var K = [];
+  for (var j = 0; j < N; j++) { var a = Math.max(0, j - 13), hh = -1e9, ll = 1e9; for (var q = a; q <= j; q++) { hh = Math.max(hh, bars[q].h); ll = Math.min(ll, bars[q].l); } K.push(hh > ll ? (bars[j].c - ll) / (hh - ll) * 100 : 50); }
+  var Ks = K.map(function (v, k) { var s = 0, n = 0; for (var q = Math.max(0, k - 2); q <= k; q++) { s += K[q]; n++; } return s / n; });
+  function drawHero() {
+    var cv = document.getElementById("hero"); if (!cv) return;
+    var g = fit(cv), x = g.x, W = g.w, H = g.h, top = H * 0.68, padR = 44;
+    x.clearRect(0, 0, W, H);
+    var lo = 1e9, hi = -1e9;
+    bars.forEach(function (b, k) { lo = Math.min(lo, b.l, vw[k] - 3 * sd[k]); hi = Math.max(hi, b.h, vw[k] + 3 * sd[k]); });
+    var cw = (W - padR) / N, Y = function (v) { return 6 + (hi - v) / (hi - lo) * (top - 12); };
+    x.strokeStyle = css("--line"); x.lineWidth = 1;
+    x.beginPath(); x.moveTo(0, top + 0.5); x.lineTo(W, top + 0.5); x.stroke();
+    x.fillStyle = css("--muted"); x.font = "11px " + css("--f-mono");
+    [lo + (hi - lo) * 0.2, lo + (hi - lo) * 0.8].forEach(function (v) { x.fillText(v.toFixed(0), W - padR + 6, Y(v) + 4); });
+    function line(arr, col, dash, wdt) { x.setLineDash(dash); x.strokeStyle = col; x.lineWidth = wdt; x.beginPath(); arr.forEach(function (v, k) { var px = k * cw + cw / 2; k ? x.lineTo(px, Y(v)) : x.moveTo(px, Y(v)); }); x.stroke(); x.setLineDash([]); }
+    [[3, "--band3"], [2, "--band2"], [1, "--band1"]].forEach(function (m) {
+      line(vw.map(function (v, k) { return v + m[0] * sd[k]; }), css(m[1]), [2, 3], 1);
+      line(vw.map(function (v, k) { return v - m[0] * sd[k]; }), css(m[1]), [2, 3], 1);
+    });
+    bars.forEach(function (b, k) {
+      var px = k * cw + cw / 2, up = b.c >= b.o, col = css(up ? "--bull" : "--bear");
+      x.strokeStyle = col; x.fillStyle = col; x.lineWidth = 1;
+      x.beginPath(); x.moveTo(px, Y(b.h)); x.lineTo(px, Y(b.l)); x.stroke();
+      var y1 = Y(Math.max(b.o, b.c)), y2 = Y(Math.min(b.o, b.c));
+      x.fillRect(px - cw * 0.32, y1, cw * 0.64, Math.max(1, y2 - y1));
+    });
+    line(vw, css("--vwap"), [], 2);
+    // stochastic pane
+    var sy = function (v) { return top + 8 + (100 - v) / 100 * (H - top - 14); };
+    x.setLineDash([3, 3]); x.strokeStyle = css("--muted"); x.lineWidth = 1;
+    [95, 5].forEach(function (v) { x.beginPath(); x.moveTo(0, sy(v)); x.lineTo(W - padR, sy(v)); x.stroke(); x.fillText(String(v), W - padR + 6, sy(v) + 4); });
+    x.setLineDash([]); x.strokeStyle = css("--band1"); x.lineWidth = 1.5; x.beginPath();
+    Ks.forEach(function (v, k) { var px = k * cw + cw / 2; k ? x.lineTo(px, sy(v)) : x.moveTo(px, sy(v)); }); x.stroke();
+    // REV markers: %K leaving 95 / 5
+    x.font = "bold 11px " + css("--f-mono");
+    for (var k = 1; k < N; k++) {
+      var px = k * cw + cw / 2;
+      if (Ks[k - 1] >= 92 && Ks[k] < 92) { x.fillStyle = css("--bear"); x.fillText("▼", px - 5, Y(bars[k].h) - 6); }
+      if (Ks[k - 1] <= 8 && Ks[k] > 8) { x.fillStyle = css("--bull"); x.fillText("▲", px - 5, Y(bars[k].l) + 16); }
+    }
+  }
+  function drawSparks() {
+    document.querySelectorAll("canvas.mini").forEach(function (cv) {
+      var g = fit(cv), x = g.x, W = g.w, H = g.h, r = rng(+cv.dataset.seed), t = cv.dataset.spark;
+      x.clearRect(0, 0, W, H); x.lineWidth = 1.5;
+      if (t === "stoch") {
+        x.strokeStyle = css("--line"); x.setLineDash([2, 3]); [0.15, 0.85].forEach(function (f) { x.beginPath(); x.moveTo(0, H * f); x.lineTo(W, H * f); x.stroke(); }); x.setLineDash([]);
+        x.strokeStyle = css("--vwap"); x.beginPath(); for (var i = 0; i <= 60; i++) { var v = 0.5 + 0.42 * Math.sin(i / 5 + r() * 0.6); x.lineTo(i / 60 * W, H * (1 - v)); } x.stroke();
+      } else if (t === "pattern") {
+        var P = [0.8, 0.15, 0.6, 0.3, 0.95].map(function (v, i) { return [8 + i / 4 * (W - 16), 6 + v * (H - 12)]; });
+        x.fillStyle = css("--chip"); x.beginPath(); x.moveTo(P[0][0], P[0][1]); P.forEach(function (q) { x.lineTo(q[0], q[1]); }); x.closePath(); x.fill();
+        x.strokeStyle = css("--vwap"); x.beginPath(); P.forEach(function (q, i) { i ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1]); }); x.stroke();
+        x.fillStyle = css("--muted"); x.font = "10px " + css("--f-mono"); ["X", "A", "B", "C", "D"].forEach(function (s, i) { x.fillText(s, P[i][0] + 3, P[i][1] < H / 2 ? P[i][1] + 12 : P[i][1] - 4); });
+      } else if (t === "bars") {
+        var n = 14, w = W / n; for (var k = 0; k < n; k++) { var up = r() > 0.45, hgt = (k === 6 ? 0.35 : k === 7 ? 0.18 : 0.2 + r() * 0.45) * H, y0 = H / 2 - hgt / 2 + (r() - 0.5) * 10; x.fillStyle = css(k === 7 ? "--vwap" : up ? "--bull" : "--bear"); x.fillRect(k * w + w * 0.2, y0, w * 0.6, hgt); }
+      } else {
+        [0.22, 0.5, 0.78].forEach(function (f, i) { x.strokeStyle = css(i === 1 ? "--vwap" : "--band1"); x.lineWidth = i === 1 ? 2.5 : 1.5; x.beginPath(); x.moveTo(0, H * f); x.lineTo(W, H * f); x.stroke(); });
+        x.strokeStyle = css("--muted"); x.lineWidth = 1; x.beginPath(); for (var m = 0; m <= 40; m++) x.lineTo(m / 40 * W, H * (0.5 + 0.3 * Math.sin(m / 4) + (r() - 0.5) * 0.1)); x.stroke();
+      }
+    });
+  }
+  function redraw() { drawHero(); drawSparks(); }
+  drawHero(); drawSparks();
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(redraw, 120); });
+  try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redraw); } catch (e) {}
+  new MutationObserver(redraw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(redraw);
+
 })();
 </script>
 </main>
