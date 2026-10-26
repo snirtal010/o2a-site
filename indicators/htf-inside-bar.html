@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HTF Inside Bar · o2a</title>
+<meta name="description" content="Finds inside-bar patterns on a higher timeframe, filters them, and plans the breakout entry, stop and three targets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="o2a home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="var(--ink)"/><path d="M5 19 C9 9, 13 9, 15 15 S21 21, 25 11" fill="none" stroke="var(--vwap)" stroke-width="2.6" stroke-linecap="round"/></svg>
+      o2a
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="../index.html#indicators">Indicators</a>
+      <a href="../index.html#method">How we build</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn primary" href="../index.html#contact">Get access</a>
+  </div>
+</header>
+<main id="top">
+
+  <section class="wrap ind-hero">
+    <p class="crumb"><a href="../index.html#indicators">Indicators</a> / HTF Inside Bar</p>
+    <span class="eyebrow">Price action · HTF</span>
+    <h1>HTF Inside Bar <span style="color:var(--muted);font-weight:600">r1.08</span></h1>
+    <p class="lede">Detects inside bars on higher-timeframe candles: a 'mother' candle followed by a smaller candle that stays within it (five definitions, including a sweep variant). Optional trend and candle filters (moving average, slope, anchored VWAP, swing VWAP, wick, body, RSI, TSI, volume) decide which patterns count. For each pattern it places a planned entry and stop, tracks the fill, three R-multiple targets and an optional trailing target, and summarises outcomes in a table. Described from the MT5 port; no Pine copy was available.</p>
+    <div class="platforms"><span class="pill">TradingView</span><span class="pill">MetaTrader 5</span></div>
+    <figure class="shot"><img src="../img/insidebar.jpg" alt="HTF Inside Bar on a TradingView chart (XAUUSD)" loading="eager"><figcaption>Real TradingView chart, XAUUSD.</figcaption></figure>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <div class="block"><h2 style="font-size:1.4rem">What it draws</h2><ul><li>The two higher-timeframe candles of each pattern (mother and inside bar), optionally as Heikin Ashi with momentum colours</li><li>Mother range box (green for long, red for short, grey for breakout-both-ways)</li><li>Pattern label: '▣ Inside Bar ▲/▼', '▣ IB Sweep', or '◆ Breakout', with tags for the momentum and filter settings and optional candle stats (wick %, body %, RSI, TSI, volume ratio)</li><li>Waiting order: dotted entry and SL lines with a label such as 'I1 Buy Stop'</li><li>Filled position: dashed entry, SL, TP1, TP2, TP3 lines with labels; optional trailing SL / target lines</li><li>Plotted filter lines (each optional): TF Smooth MA, TF Slope MA, Anchored VWAP, Swing-High and Swing-Low anchored VWAPs</li><li>Results table: counts of SL / TP1 / TP2 / TP3 outcomes, the entry and stop types, and each enabled filter's current long / short pass (✓ / ✗)</li></ul></div>
+    <div class="block"><h2 style="font-size:1.4rem">Signals</h2><dl class="sig"><div><dt>Inside Bar pattern</dt><dd>Checked when a new HTF candle starts, on the last two completed HTF candles: Mother = the older, Inside = the newer. Type 'Regular': inside body within mother's high-low; 'Full': inside body within mother's body and inside high/low within mother's high/low; 'Body Only': inside body within mother's body; 'Wick Only': inside high at or below mother high and inside low at or above mother low; 'Sweep': the inside candle wicks beyond one side of the mother and closes back inside its range. The pattern counts only if the momentum Heikin Ashi filter (optional) and all enabled filters pass.</dd></div><div><dt>Direction</dt><dd>'First' (default): from the mother candle's colour; 'Second': from the inside candle's colour; 'Breakout': both directions are armed and the first to fill cancels the other. For Sweep, a sweep of the low means long and a sweep of the high means short.</dd></div><div><dt>I1 entry fill</dt><dd>Entry types: Mother Breakout (stop order at mother high for long / low for short, default), Inside Breakout (stop at inside high/low), Close Beyond Mother (fills at the close of the first bar that closes beyond the entry level), Mother Breakout Retest (after a close beyond, a limit back at the mother level), Mother 50% (limit at the mother midpoint), Market (at confirmation). A waiting order is cancelled if the stop level is touched first, expires after N HTF bars if set, and with 'Re-check Filters at Fill' it is closed as 'Filtered' when the trend filters no longer pass at the fill.</dd></div><div><dt>Outcome</dt><dd>After a fill, the position closes at SL or at TP3; the best target reached (TP1 1R, TP2 2.5R, TP3 6R by default) is recorded. With TrailerR on, after the start target is hit the stop moves to entry and then steps up by the SL jump each time the target (stepped by the TP jump) is reached.</dd></div></dl></div>
+  </div></section>
+  <section class="band"><div class="wrap" style="display:grid;gap:24px">
+    <div class="block"><h2 style="font-size:1.4rem">Main settings</h2><div class="tbl"><table><thead><tr><th>Setting</th><th>Default</th><th>What it does</th></tr></thead><tbody><tr><td>Timeframe / Use Current Timeframe</td><td>M15 / off (MT5 port defaults)</td><td>Timeframe the pattern is detected on.</td></tr><tr><td>Inside Bar Type</td><td>Wick Only</td><td>Regular, Full, Body Only, Wick Only or Sweep (definitions above).</td></tr><tr><td>Direction By</td><td>First (mother candle)</td><td>First, Second or Breakout (both sides, one cancels the other).</td></tr><tr><td>Momentum HA Mother Filter</td><td>off</td><td>Requires the mother's Heikin Ashi candle to be a momentum candle (no counter-trend wick) in the trade direction.</td></tr><tr><td>Trend filters: TF Smooth MA / TF Slope / Anchored VWAP / TF Swing AVWAP</td><td>Off / Off / Normal (Session anchor) / Normal (H1, Latest Swing, pivots 8/8)</td><td>Each Off, Normal or Inverted: price above (long) or below (short) the MA or VWAP, or MA slope angle beyond the minimum (5°).</td></tr><tr><td>Candle filters: Wick / Body / RSI / TSI / Volume, applied on</td><td>TSI Normal (25/13/13, Above Signal); others Off; applied on Mother</td><td>Wick at least 50%, body at most 33%, RSI ≤ / ≥ 50, TSI above/below its signal or zero, volume above its 20-bar average; on the mother, inside or combined candle.</td></tr><tr><td>Entry Type</td><td>Mother Breakout (Stop)</td><td>How and where the entry is placed (see I1 entry fill).</td></tr><tr><td>Stop Loss Type</td><td>ATR (HTF) 14 x 1.0</td><td>Mother extreme, inside extreme, pattern extreme, mother 50%, ATR, or fixed ticks; extreme-based stops get a pad of the average wick (SMA 200) x multiplier.</td></tr><tr><td>I1 TP1 / TP2 / TP3 (R)</td><td>1.0 / 2.5 / 6.0</td><td>Targets as multiples of the entry-to-stop distance.</td></tr><tr><td>I1 TrailerR</td><td>off</td><td>Trailing target/stop stepping in R units (start at TP1 or TP2).</td></tr></tbody></table></div></div>
+    <div class="cols">
+      <div class="block"><h2 style="font-size:1.4rem">Timeframes</h2><p>Pattern timeframe input (MT5 default M15) or the current chart timeframe. Separate timeframe inputs for the Smooth MA, Slope and Swing AVWAP filters (MT5 default H1 each). The anchored VWAP can anchor to Session, Asia / London / NY kill zones, Week, Month, Quarter, Year or a custom time; kill-zone hours are inputs (MT5 defaults 0300-0700, 0900-1200, 1400-1700 at UTC+3).</p><h2 style="font-size:1.4rem">Alerts</h2><p>MT5 port: none. TradingView original: unclear (Pine source not available).</p></div>
+      <div class="block"><h2 style="font-size:1.4rem">Closed candles and repainting</h2><ul><li>Port header: every higher timeframe (pattern, MA, slope, swing) is read as request.security with lookahead_on on [1] values, i.e. the last completed bar of that timeframe, available from the first chart bar after it closes.</li><li>Chart-timeframe series (anchored VWAP, swing AVWAP, chart ATR) are read on the last closed chart bar ([1]).</li><li>The pattern is evaluated once when a new HTF candle starts, so it appears after the inside candle has closed; order fills and outcomes are checked bar by bar on the chart timeframe; the forming chart bar is worked on a copy of the state.</li></ul></div>
+    </div>
+    <div class="block"><h2 style="font-size:1.4rem">On MetaTrader 5</h2><ul><li>MT5 defaults are the author's live TradingView chart settings (2026-10-08), not necessarily the Pine defaults.</li><li>MT5-only: mid price option (bid + half spread), chart bars calculated (default 20,000), warm-up history on the other timeframes, Pine-style 500-object limit, optional CSV dump.</li><li>Kill-zone times are converted from the broker server clock using the US daylight-saving rule (server UTC+3 in US summer, UTC+2 otherwise); the custom anchor is in server time; 'Fixed Ticks' uses the symbol's point size.</li><li>Transparency is emulated by blending colours with the chart background.</li></ul></div>
+    <div><a class="btn primary" href="../index.html#contact">Get access</a> <a class="btn ghost" href="../index.html#indicators">All indicators</a></div>
+  </div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:1.1rem">o2a</div>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms of use</a>
+      <a href="../legal/privacy.html">Privacy policy</a>
+      <a href="../legal/refunds.html">Refund policy</a>
+      <a href="../legal/risk.html">Risk disclaimer</a>
+    </nav>
+    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
+    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
+    <p>© <span class="yr">2026</span> o2a</p>
+  </div>
+</footer>
+<script>document.querySelectorAll(".yr").forEach(function (e) { e.textContent = String(new Date().getFullYear()); });</script>
+</body>
+</html>

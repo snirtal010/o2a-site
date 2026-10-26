@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HTF Candle Patterns · o2a</title>
+<meta name="description" content="Spots engulfing and inverse engulfing patterns on higher-timeframe candles and shows them on your chart.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="o2a home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="var(--ink)"/><path d="M5 19 C9 9, 13 9, 15 15 S21 21, 25 11" fill="none" stroke="var(--vwap)" stroke-width="2.6" stroke-linecap="round"/></svg>
+      o2a
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="../index.html#indicators">Indicators</a>
+      <a href="../index.html#method">How we build</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn primary" href="../index.html#contact">Get access</a>
+  </div>
+</header>
+<main id="top">
+
+  <section class="wrap ind-hero">
+    <p class="crumb"><a href="../index.html#indicators">Indicators</a> / HTF Candle Patterns</p>
+    <span class="eyebrow">Price action · HTF</span>
+    <h1>HTF Candle Patterns</h1>
+    <p class="lede">Detects two-candle engulfing and inverse engulfing patterns on a higher timeframe (default 15 minutes) and displays them on the current chart. Each pattern type has its own liquidity-grab filter, optional size filter and, for the inverse type, a choice of which candle sets the direction. A Forex / no-gap mode relaxes body comparisons for markets where each candle opens at the previous close. Only the engulfing part of the source was available; the full indicator also contains other pattern families listed below.</p>
+    <div class="platforms"><span class="pill">TradingView</span></div>
+    <figure class="shot"><img src="../img/htfcandles.jpg" alt="HTF Candle Patterns on a TradingView chart (XAUUSD)" loading="eager"><figcaption>Real TradingView chart, XAUUSD.</figcaption></figure>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <div class="block"><h2 style="font-size:1.4rem">What it draws</h2><ul><li>Unclear from the extract (drawing code was removed). Input tooltips in the extract say the original draws the HTF candles (not when 'Use Current Timeframe' is on), pattern labels and Fib levels; the extract README also lists SL/TP levels.</li></ul></div>
+    <div class="block"><h2 style="font-size:1.4rem">Signals</h2><dl class="sig"><div><dt>▲ Engulfing (bullish)</dt><dd>C1 = the older of the last two closed HTF candles, C2 = the newer. C1 bearish, C2 bullish, C2 body top above C1 body top and C2 body bottom below C1 body bottom (with Forex / No-Gap mode on, the bottom may be equal). A candle with close = open counts as bullish.</dd></div><div><dt>▼ Engulfing (bearish)</dt><dd>C1 bullish, C2 bearish, C2 body bottom below C1 body bottom and C2 body top above C1 body top (with Forex mode on, the top may be equal).</dd></div><div><dt>Engulfing filters</dt><dd>Engulfing Filter: Any; Liq Grab (bull needs C2 low below C1 low, bear needs C2 high above C1 high); No Liq Grab (the opposite). Optional size filter: C2 at least N times C1 (N = 4) by body, high-low range, or both.</dd></div><div><dt>▲ / ▼ Inv Engulf (inverse engulfing)</dt><dd>C1 body contains C2 body (strictly inside; with Forex mode both edges may be equal). Direction by 'Second Candle' (default): bull = C1 bearish and C2 bullish, bear = C1 bullish and C2 bearish. Direction by 'First Candle': bull when C1 is bullish, bear when C1 is bearish, any C2 colour.</dd></div><div><dt>Inverse engulfing filters</dt><dd>Inv Filter: Any; Liq Grab (bull: C2 low below C1 low; bear: C2 high above C1 high); No Liq Grab (C2's whole range inside C1). Optional size filter: C1 at least N times C2 (N = 4) by body, range, or both.</dd></div><div><dt>Priority</dt><dd>If several match on the same candle: bull engulfing, then bear engulfing, then bull inverse, then bear inverse. In the full indicator, 2-bar patterns are only checked when no 3-bar pattern fired on that candle.</dd></div></dl></div>
+  </div></section>
+  <section class="band"><div class="wrap" style="display:grid;gap:24px">
+    <div class="block"><h2 style="font-size:1.4rem">Main settings</h2><div class="tbl"><table><thead><tr><th>Setting</th><th>Default</th><th>What it does</th></tr></thead><tbody><tr><td>Timeframe</td><td>15</td><td>Higher timeframe on which patterns are detected.</td></tr><tr><td>Use Current Timeframe</td><td>off</td><td>Detect on the chart timeframe instead (HTF candles are then not drawn).</td></tr><tr><td>Forex / No-Gap Mode</td><td>on</td><td>Relaxes strict body comparisons to allow equal edges, for 24h markets where open = previous close.</td></tr><tr><td>Engulfing ▲▼</td><td>on</td><td>Enables regular engulfing.</td></tr><tr><td>Engulfing Filter</td><td>Any</td><td>Any, Liq Grab or No Liq Grab.</td></tr><tr><td>Enable Size Filter / Size Measure / Min Size Ratio (N)</td><td>off / Body / 4.0</td><td>Requires the engulfing candle to be N times the engulfed one.</td></tr><tr><td>Inverse Engulfing ▲▼</td><td>on</td><td>Enables inverse engulfing (big first candle, small second candle inside it).</td></tr><tr><td>Inv Filter</td><td>Any</td><td>Any, Liq Grab or No Liq Grab for the inverse type.</td></tr><tr><td>Direction by (inverse)</td><td>Second Candle</td><td>Which candle sets the inverse-engulfing direction.</td></tr><tr><td>Inverse Enable Size Filter / Size Measure / Min Size Ratio (N)</td><td>off / Body / 4.0</td><td>Requires the first candle to be N times the second.</td></tr></tbody></table></div></div>
+    <div class="cols">
+      <div class="block"><h2 style="font-size:1.4rem">Timeframes</h2><p>Higher timeframe input (default 15 minutes) or the current chart timeframe; patterns are displayed on the chart timeframe.</p><h2 style="font-size:1.4rem">Alerts</h2><p>The extract README says alerts exist in the original but were removed from the extract; which conditions they cover is unclear.</p></div>
+      <div class="block"><h2 style="font-size:1.4rem">Closed candles and repainting</h2><ul><li>HTF data is requested with request.security on [1] values with lookahead_on, so it uses only closed HTF candles.</li><li>Detection runs once when a new HTF candle starts (or on each closed chart bar in current-timeframe mode), so a pattern appears on the first chart bar after the second candle closes.</li></ul></div>
+    </div>
+    
+    <div><a class="btn primary" href="../index.html#contact">Get access</a> <a class="btn ghost" href="../index.html#indicators">All indicators</a></div>
+  </div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:1.1rem">o2a</div>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms of use</a>
+      <a href="../legal/privacy.html">Privacy policy</a>
+      <a href="../legal/refunds.html">Refund policy</a>
+      <a href="../legal/risk.html">Risk disclaimer</a>
+    </nav>
+    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
+    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
+    <p>© <span class="yr">2026</span> o2a</p>
+  </div>
+</footer>
+<script>document.querySelectorAll(".yr").forEach(function (e) { e.textContent = String(new Date().getFullYear()); });</script>
+</body>
+</html>

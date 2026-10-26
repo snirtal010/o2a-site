@@ -8,171 +8,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<style>
-/* Layout: one long page; a chart-pane hero, then catalog / method / install / pricing / FAQ / contact bands, each on a 1120px measure */
-:root {
-  --bg: #f4f6f8;          /* cool chart-paper white */
-  --surface: #ffffff;
-  --ink: #141a2e;         /* navy ink */
-  --muted: #5a6378;
-  --line: #dde2ea;
-  --vwap: #a3159a;        /* the indicators' VWAP magenta */
-  --band1: #0a8fa8;       /* +-1 sigma cyan */
-  --band2: #b88a00;       /* +-2 sigma amber */
-  --band3: #c8403e;       /* +-3 sigma red */
-  --bull: #1f9d8b;
-  --bear: #d9534f;
-  --chip: #eef0f6;
-  --accent-ink: #ffffff;
-  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f1320; --surface: #161b2b; --ink: #e8ebf3; --muted: #9aa3b8; --line: #283048;
-    --vwap: #e040fb; --band1: #2fd6f0; --band2: #ffd23f; --band3: #ff6b66; --bull: #26a69a; --bear: #ef5350;
-    --chip: #1e2438; --accent-ink: #12051a; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0f1320; --surface: #161b2b; --ink: #e8ebf3; --muted: #9aa3b8; --line: #283048;
-  --vwap: #e040fb; --band1: #2fd6f0; --band2: #ffd23f; --band3: #ff6b66; --bull: #26a69a; --bear: #ef5350;
-  --chip: #1e2438; --accent-ink: #12051a; color-scheme: dark;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.6; margin: 0; }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
-a { color: inherit; }
-.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
-h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); font-weight: 700; line-height: 1.15; }
-h3 { font-size: 1.2rem; font-weight: 700; line-height: 1.25; }
-p { margin: 0; }
-.eyebrow { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-.lede { color: var(--muted); max-width: 62ch; font-size: 1.05rem; }
-:focus-visible { outline: 2px solid var(--vwap); outline-offset: 3px; border-radius: 4px; }
-
-/* header */
-header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
-header.top .wrap { display: flex; align-items: center; gap: 24px; padding-block: 12px; }
-.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--f-display); font-weight: 800; font-size: 1.35rem; }
-.logo svg { flex: none; }
-nav.links { display: flex; gap: 20px; margin-left: auto; flex-wrap: wrap; }
-nav.links a { text-decoration: none; color: var(--muted); font-size: 0.95rem; font-weight: 500; }
-nav.links a:hover { color: var(--ink); }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-family: var(--f-body); }
-.btn.primary { background: var(--vwap); color: var(--accent-ink); }
-.btn.ghost { border-color: var(--line); background: var(--surface); color: var(--ink); }
-.btn:hover { filter: brightness(1.06); }
-@media (max-width: 760px) { nav.links { display: none; } header.top .btn { margin-left: auto; } }
-
-/* hero */
-.hero { padding-block: 56px 40px; }
-.hero .grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: center; }
-.hero h1 { font-size: clamp(2.3rem, 5.2vw, 3.9rem); font-weight: 800; line-height: 1.02; }
-.hero h1 em { font-style: normal; color: var(--vwap); }
-.hero .copy { display: grid; gap: 20px; min-width: 0; }
-.hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
-.platforms { display: flex; gap: 10px; flex-wrap: wrap; }
-.pill { font-family: var(--f-mono); font-size: 0.78rem; padding: 4px 10px; border-radius: 999px; background: var(--chip); color: var(--ink); white-space: nowrap; }
-.chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; min-width: 0; }
-.chart-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); padding: 0 4px 8px; }
-.chart-head b { color: var(--ink); font-weight: 500; }
-canvas#hero { width: 100%; height: 360px; display: block; }
-.legend { display: flex; gap: 14px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 0.74rem; color: var(--muted); padding: 8px 4px 0; }
-.legend i { display: inline-block; width: 18px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
-@media (max-width: 860px) { .hero .grid { grid-template-columns: 1fr; } canvas#hero { height: 300px; } }
-
-section.band { padding-block: 64px; border-top: 1px solid var(--line); }
-.section-head { display: grid; gap: 12px; margin-bottom: 32px; }
-
-/* catalog */
-.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
-.filters button { font: 500 0.9rem var(--f-body); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; }
-.filters button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; min-width: 0; }
-.card .meta { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
-.card .ver { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); }
-.card p { color: var(--muted); font-size: 0.95rem; }
-.card ul { margin: 0; padding-left: 18px; color: var(--ink); font-size: 0.9rem; display: grid; gap: 4px; }
-.card .foot { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 12px; border-top: 1px dashed var(--line); }
-.tag-tv { background: var(--chip); }
-.status { color: var(--band2); }
-.mini { height: 56px; width: 100%; display: block; }
-
-/* method */
-.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: s; }
-.step { display: grid; gap: 8px; align-content: start; min-width: 0; }
-.step .n { font-family: var(--f-mono); font-size: 0.8rem; color: var(--vwap); }
-.step p { color: var(--muted); font-size: 0.95rem; }
-@media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
-.compare { margin-top: 36px; overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
-.compare table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.92rem; }
-.compare th, .compare td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
-.compare th { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
-.compare tr:last-child td { border-bottom: 0; }
-
-/* install */
-.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: grid; gap: 14px; align-content: start; min-width: 0; }
-.panel ol { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
-code { font-family: var(--f-mono); font-size: 0.86em; background: var(--chip); padding: 1px 6px; border-radius: 4px; overflow-wrap: anywhere; }
-
-/* pricing */
-.prices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-@media (max-width: 860px) { .prices { grid-template-columns: 1fr; } }
-.price { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: grid; gap: 14px; align-content: start; }
-.price.feature { border: 2px solid var(--vwap); }
-.price .amt { font-family: var(--f-display); font-size: 2.2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
-.price .amt span { font-size: 1rem; color: var(--muted); font-weight: 500; }
-.price ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--muted); font-size: 0.95rem; }
-.sample-note { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); margin-top: 16px; }
-
-/* faq */
-.faq { display: grid; gap: 10px; max-width: 820px; }
-details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 20px; }
-summary { cursor: pointer; font-weight: 600; }
-details p { color: var(--muted); margin-top: 10px; }
-
-/* contact */
-form.contact { display: grid; gap: 14px; max-width: 620px; }
-form.contact .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media (max-width: 560px) { form.contact .row { grid-template-columns: 1fr; } }
-label { display: grid; gap: 6px; font-size: 0.9rem; font-weight: 500; }
-input, select, textarea { font: 400 1rem var(--f-body); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); width: 100%; }
-textarea { min-height: 120px; resize: vertical; }
-.sent { color: var(--bull); font-weight: 600; }
-
-footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var(--muted); font-size: 0.85rem; }
-footer .wrap { display: grid; gap: 16px; }
-footer .risk { max-width: 90ch; }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="o2a home">
+    <a class="logo" href="index.html" aria-label="o2a home">
       <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="var(--ink)"/><path d="M5 19 C9 9, 13 9, 15 15 S21 21, 25 11" fill="none" stroke="var(--vwap)" stroke-width="2.6" stroke-linecap="round"/></svg>
       o2a
     </a>
     <nav class="links" aria-label="Sections">
-      <a href="#indicators">Indicators</a>
-      <a href="#method">How we build</a>
-      <a href="#install">Install</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
+      <a href="index.html#indicators">Indicators</a>
+      <a href="index.html#method">How we build</a>
+      <a href="index.html#install">Install</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
     </nav>
-    <a class="btn primary" href="#contact">Get access</a>
+    <a class="btn primary" href="index.html#contact">Get access</a>
   </div>
 </header>
-
 <main id="top">
+
   <section class="hero">
     <div class="wrap grid">
       <div class="copy">
@@ -191,15 +47,9 @@ footer .risk { max-width: 90ch; }
         </div>
       </div>
       <figure class="chart-card" style="margin:0">
-        <div class="chart-head"><span><b>XAUUSD</b> · 1m · Stochastic [o2a v2.00]</span><span>VWAP ±1σ ±2σ ±3σ</span></div>
-        <canvas id="hero" role="img" aria-label="Example chart: candles with a session VWAP and three dotted sigma bands, reversal markers, and a stochastic pane with 95 and 5 levels underneath."></canvas>
-        <figcaption class="legend">
-          <span><i style="border-color:var(--vwap)"></i>VWAP</span>
-          <span><i style="border-color:var(--band1);border-top-style:dotted"></i>±1σ</span>
-          <span><i style="border-color:var(--band2);border-top-style:dotted"></i>±2σ</span>
-          <span><i style="border-color:var(--band3);border-top-style:dotted"></i>±3σ</span>
-          <span>▲▼ REV signals · illustration, not market data</span>
-        </figcaption>
+        <div class="chart-head"><span><b>XAUUSD</b> · 1m · Stochastic [o2a v2.00]</span><span>TradingView</span></div>
+        <img class="hero-shot" src="img/stochastic.jpg" width="1600" height="805" alt="Stochastic [o2a v2.00] on XAUUSD 1-minute: reversal and double-bottom signals on the chart, session VWAP bands, and the oscillator pane with its status table">
+        <figcaption class="legend"><span>Real TradingView chart · Stochastic [o2a v2.00] · XAUUSD 1m</span></figcaption>
       </figure>
     </div>
   </section>
@@ -216,7 +66,50 @@ footer .risk { max-width: 90ch; }
         <button type="button" id="f-both" data-f="both" aria-pressed="false">TradingView + MT5</button>
         <button type="button" id="f-tv" data-f="tv" aria-pressed="false">TradingView only</button>
       </div>
-      <div class="cards" id="cards"></div>
+      <div class="cards" id="cards">
+        <article class="card" data-mt5="1">
+          <div class="meta"><h3>Stochastic</h3><span class="ver">v2.00</span></div>
+          <a href="indicators/stochastic.html" aria-label="Stochastic details"><img class="thumb" src="img/stochastic.jpg" loading="lazy" alt="Stochastic on a TradingView chart"></a>
+          <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Oscillator · VWAP</span><p>A Stochastic that marks overbought/oversold exits, double tops/bottoms with liquidity grabs, and higher-timeframe signals.</p></div>
+          <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/stochastic.html" style="margin-left:auto">Details →</a></div>
+        </article>
+        <article class="card" data-mt5="1">
+          <div class="meta"><h3>Butterfly</h3><span class="ver">v1.00</span></div>
+          <a href="indicators/butterfly.html" aria-label="Butterfly details"><img class="thumb" src="img/butterfly.jpg" loading="lazy" alt="Butterfly on a TradingView chart"></a>
+          <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Harmonic pattern</span><p>Finds Butterfly harmonic patterns on a higher timeframe and marks the reversal zone, entry signals and single-target positions.</p></div>
+          <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/butterfly.html" style="margin-left:auto">Details →</a></div>
+        </article>
+        <article class="card" data-mt5="1">
+          <div class="meta"><h3>AB=CD Pattern</h3><span class="ver"></span></div>
+          <a href="indicators/abcd.html" aria-label="AB=CD Pattern details"><img class="thumb" src="img/abcd.jpg" loading="lazy" alt="AB=CD Pattern on a TradingView chart"></a>
+          <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Harmonic pattern</span><p>Detects AB=CD swing patterns, draws the reversal zone at D, and tracks rejection and break-and-retest signals with targets.</p></div>
+          <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/abcd.html" style="margin-left:auto">Details →</a></div>
+        </article>
+        <article class="card" data-mt5="1">
+          <div class="meta"><h3>HTF Inside Bar</h3><span class="ver">r1.08</span></div>
+          <a href="indicators/htf-inside-bar.html" aria-label="HTF Inside Bar details"><img class="thumb" src="img/insidebar.jpg" loading="lazy" alt="HTF Inside Bar on a TradingView chart"></a>
+          <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Price action · HTF</span><p>Finds inside-bar patterns on a higher timeframe, filters them, and plans the breakout entry, stop and three targets.</p></div>
+          <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/htf-inside-bar.html" style="margin-left:auto">Details →</a></div>
+        </article>
+        <article class="card" data-mt5="1">
+          <div class="meta"><h3>Strong S&amp;R</h3><span class="ver">r1.01</span></div>
+          <a href="indicators/strong-sr.html" aria-label="Strong S&amp;R details"><img class="thumb" src="img/strongsr.jpg" loading="lazy" alt="Strong S&amp;R on a TradingView chart"></a>
+          <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Levels</span><p>Draws the strongest support and resistance levels from higher-timeframe swings, scored by touches and fading with age.</p></div>
+          <div class="foot"><span class="pill">TradingView</span><span class="pill">MT5</span><a class="more" href="indicators/strong-sr.html" style="margin-left:auto">Details →</a></div>
+        </article>
+        <article class="card" data-mt5="0">
+          <div class="meta"><h3>HTF Candle Patterns</h3><span class="ver"></span></div>
+          <a href="indicators/htf-candle-patterns.html" aria-label="HTF Candle Patterns details"><img class="thumb" src="img/htfcandles.jpg" loading="lazy" alt="HTF Candle Patterns on a TradingView chart"></a>
+          <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Price action · HTF</span><p>Spots engulfing and inverse engulfing patterns on higher-timeframe candles and shows them on your chart.</p></div>
+          <div class="foot"><span class="pill">TradingView</span><a class="more" href="indicators/htf-candle-patterns.html" style="margin-left:auto">Details →</a></div>
+        </article>
+        <article class="card" data-mt5="0">
+          <div class="meta"><h3>MSO MTF</h3><span class="ver">v2.16</span></div>
+          <a href="indicators/mso-mtf.html" aria-label="MSO MTF details"><img class="thumb" src="img/mso.jpg" loading="lazy" alt="MSO MTF on a TradingView chart"></a>
+          <div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">Multi-timeframe structure</span><p>A market-structure oscillator on three timeframes, with structure breaks, reversal zones, big candles, trend tracking and a confluence dashboard.</p></div>
+          <div class="foot"><span class="pill">TradingView</span><span class="pill status">MT5 in testing</span><a class="more" href="indicators/mso-mtf.html" style="margin-left:auto">Details →</a></div>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -302,7 +195,7 @@ footer .risk { max-width: 90ch; }
           <a class="btn ghost" href="#contact">Choose</a>
         </div>
       </div>
-      <p class="sample-note">Sample prices for layout only. Set your own before launch.</p>
+      <p class="sample-note">Sample prices for layout only. Payment is arranged by email for now: send a request below.</p>
     </div>
   </section>
 
@@ -344,160 +237,45 @@ footer .risk { max-width: 90ch; }
       </form>
     </div>
   </section>
-</main>
-
-<footer>
-  <div class="wrap">
-    <div class="logo" style="font-size:1.1rem">o2a</div>
-    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
-    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
-    <p>© <span id="yr">2026</span> o2a</p>
-  </div>
-</footer>
-
 <script>
 (function () {
   "use strict";
-  // ---- catalog (draft copy: edit names, versions and text before launch)
-  var IND = [
-    { name: "Stochastic", ver: "o2a v2.00", tv: true, mt5: "ready", kind: "Oscillator · VWAP", spark: "stoch",
-      text: "Overbought / oversold reversals and double tops / bottoms with a liquidity grab, on your chart timeframe and on a higher timeframe at once.",
-      pts: ["Session VWAP with ±1σ, ±2σ and ±3σ bands", "The higher-timeframe candle drawn behind every HTF signal", "Kill zones and a signal statistics table"] },
-    { name: "Butterfly", ver: "o2a v1.00", tv: true, mt5: "ready", kind: "Harmonic pattern", spark: "pattern",
-      text: "X-A-B-C-D Butterfly patterns on a pattern timeframe the indicator builds itself, with the reversal zone at D.",
-      pts: ["Inner and outer PRZ boxes", "Wick / close rejection and break-and-retest signals", "Pattern volume profile and pattern data table"] },
-    { name: "AB=CD Pattern", ver: "o2a v3.00", tv: true, mt5: "ready", kind: "Harmonic pattern", spark: "pattern",
-      text: "AB=CD swing patterns with a reversal zone, rejection signals and a stop and targets for each setup.",
-      pts: ["Inner / outer wick and close rejections", "Stops and targets drawn on the chart", "Statistics table"] },
-    { name: "HTF Inside Bar", ver: "o2a r1.08", tv: true, mt5: "ready", kind: "Price action · HTF", spark: "bars",
-      text: "Inside bars on a higher timeframe, drawn on your chart, with validity filters so only clean setups show.",
-      pts: ["Mother-bar range and breakout levels", "Anchored and swing VWAP", "Pattern statistics table"] },
-    { name: "Strong S&R", ver: "o2a r1.01", tv: true, mt5: "ready", kind: "Levels", spark: "levels",
-      text: "Support and resistance from swing structure, weighted by how often price respected each level.",
-      pts: ["Levels ranked by strength", "Zone or line display", "Works on any timeframe"] },
-    { name: "HTF Candle Patterns", ver: "o2a", tv: true, mt5: "", kind: "Price action · HTF", spark: "bars",
-      text: "Engulfing and inverse-engulfing patterns on closed higher-timeframe candles, with an optional liquidity-grab filter.",
-      pts: ["HTF candles drawn on the chart", "Pattern and direction filters", "Alerts on pattern close"] },
-    { name: "MSO MTF", ver: "o2a v2.16", tv: true, mt5: "testing", kind: "Multi-timeframe", spark: "stoch",
-      text: "Reads the chart timeframe, 15 minutes and 1 hour together, with ATR-scaled reversal thresholds and a dashboard.",
-      pts: ["Three timeframes in one view", "ATR-based reversal sensitivity", "Dashboard and alerts"] }
-  ];
-  var cards = document.getElementById("cards");
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-  function render(f) {
-    cards.innerHTML = IND.filter(function (d) {
-      return f === "all" || (f === "both" && d.mt5) || (f === "tv" && !d.mt5);
-    }).map(function (d, i) {
-      var plat = '<span class="pill tag-tv">TradingView</span>' +
-        (d.mt5 === "ready" ? '<span class="pill">MT5</span>' : d.mt5 === "testing" ? '<span class="pill status">MT5 in testing</span>' : "");
-      return '<article class="card"><div class="meta"><h3>' + esc(d.name) + '</h3><span class="ver">' + esc(d.ver) + '</span></div>' +
-        '<canvas class="mini" data-spark="' + d.spark + '" data-seed="' + (i + 3) + '" aria-hidden="true"></canvas>' +
-        '<div style="display:grid;gap:10px;align-content:start"><span class="eyebrow">' + esc(d.kind) + '</span><p>' + esc(d.text) + '</p><ul>' +
-        d.pts.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + '</ul></div>' +
-        '<div class="foot">' + plat + '</div></article>';
-    }).join("");
-    drawSparks();
-  }
+  var FORM = "";
+  var cards = document.querySelectorAll("#cards .card");
   document.querySelectorAll(".filters button").forEach(function (b) {
     b.addEventListener("click", function () {
       document.querySelectorAll(".filters button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
-      render(b.dataset.f);
+      cards.forEach(function (c) { var m = c.getAttribute("data-mt5") === "1"; c.hidden = !(b.dataset.f === "all" || (b.dataset.f === "both" && m) || (b.dataset.f === "tv" && !m)); });
     });
   });
-
-  // ---- drawing helpers
-  function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
-  function rng(seed) { var s = seed * 9301 + 49297; return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
-  function fit(cv) { var r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1; cv.width = Math.max(1, r.width * d); cv.height = Math.max(1, r.height * d); var x = cv.getContext("2d"); x.setTransform(d, 0, 0, d, 0, 0); return { x: x, w: r.width, h: r.height }; }
-
-  // ---- hero: candles + VWAP + dotted bands + stochastic pane (deterministic illustration)
-  var N = 120, R = rng(7), bars = [], p = 4120;
-  for (var i = 0; i < N; i++) {
-    var drift = Math.sin(i / 14) * 0.9 + (R() - 0.5) * 2.6;
-    var o = p, c = o + drift, h = Math.max(o, c) + R() * 1.6, l = Math.min(o, c) - R() * 1.6;
-    bars.push({ o: o, h: h, l: l, c: c, v: 0.6 + R() }); p = c;
-  }
-  var vw = [], sd = [], pv = 0, vv = 0, p2 = 0;
-  bars.forEach(function (b) { var tp = (b.h + b.l + b.c) / 3; pv += tp * b.v; vv += b.v; p2 += tp * tp * b.v; var m = pv / vv; vw.push(m); sd.push(Math.sqrt(Math.max(0, p2 / vv - m * m))); });
-  var K = [];
-  for (var j = 0; j < N; j++) { var a = Math.max(0, j - 13), hh = -1e9, ll = 1e9; for (var q = a; q <= j; q++) { hh = Math.max(hh, bars[q].h); ll = Math.min(ll, bars[q].l); } K.push(hh > ll ? (bars[j].c - ll) / (hh - ll) * 100 : 50); }
-  var Ks = K.map(function (v, k) { var s = 0, n = 0; for (var q = Math.max(0, k - 2); q <= k; q++) { s += K[q]; n++; } return s / n; });
-  function drawHero() {
-    var cv = document.getElementById("hero"); if (!cv) return;
-    var g = fit(cv), x = g.x, W = g.w, H = g.h, top = H * 0.68, padR = 44;
-    x.clearRect(0, 0, W, H);
-    var lo = 1e9, hi = -1e9;
-    bars.forEach(function (b, k) { lo = Math.min(lo, b.l, vw[k] - 3 * sd[k]); hi = Math.max(hi, b.h, vw[k] + 3 * sd[k]); });
-    var cw = (W - padR) / N, Y = function (v) { return 6 + (hi - v) / (hi - lo) * (top - 12); };
-    x.strokeStyle = css("--line"); x.lineWidth = 1;
-    x.beginPath(); x.moveTo(0, top + 0.5); x.lineTo(W, top + 0.5); x.stroke();
-    x.fillStyle = css("--muted"); x.font = "11px " + css("--f-mono");
-    [lo + (hi - lo) * 0.2, lo + (hi - lo) * 0.8].forEach(function (v) { x.fillText(v.toFixed(0), W - padR + 6, Y(v) + 4); });
-    function line(arr, col, dash, wdt) { x.setLineDash(dash); x.strokeStyle = col; x.lineWidth = wdt; x.beginPath(); arr.forEach(function (v, k) { var px = k * cw + cw / 2; k ? x.lineTo(px, Y(v)) : x.moveTo(px, Y(v)); }); x.stroke(); x.setLineDash([]); }
-    [[3, "--band3"], [2, "--band2"], [1, "--band1"]].forEach(function (m) {
-      line(vw.map(function (v, k) { return v + m[0] * sd[k]; }), css(m[1]), [2, 3], 1);
-      line(vw.map(function (v, k) { return v - m[0] * sd[k]; }), css(m[1]), [2, 3], 1);
-    });
-    bars.forEach(function (b, k) {
-      var px = k * cw + cw / 2, up = b.c >= b.o, col = css(up ? "--bull" : "--bear");
-      x.strokeStyle = col; x.fillStyle = col; x.lineWidth = 1;
-      x.beginPath(); x.moveTo(px, Y(b.h)); x.lineTo(px, Y(b.l)); x.stroke();
-      var y1 = Y(Math.max(b.o, b.c)), y2 = Y(Math.min(b.o, b.c));
-      x.fillRect(px - cw * 0.32, y1, cw * 0.64, Math.max(1, y2 - y1));
-    });
-    line(vw, css("--vwap"), [], 2);
-    // stochastic pane
-    var sy = function (v) { return top + 8 + (100 - v) / 100 * (H - top - 14); };
-    x.setLineDash([3, 3]); x.strokeStyle = css("--muted"); x.lineWidth = 1;
-    [95, 5].forEach(function (v) { x.beginPath(); x.moveTo(0, sy(v)); x.lineTo(W - padR, sy(v)); x.stroke(); x.fillText(String(v), W - padR + 6, sy(v) + 4); });
-    x.setLineDash([]); x.strokeStyle = css("--band1"); x.lineWidth = 1.5; x.beginPath();
-    Ks.forEach(function (v, k) { var px = k * cw + cw / 2; k ? x.lineTo(px, sy(v)) : x.moveTo(px, sy(v)); }); x.stroke();
-    // REV markers: %K leaving 95 / 5
-    x.font = "bold 11px " + css("--f-mono");
-    for (var k = 1; k < N; k++) {
-      var px = k * cw + cw / 2;
-      if (Ks[k - 1] >= 92 && Ks[k] < 92) { x.fillStyle = css("--bear"); x.fillText("▼", px - 5, Y(bars[k].h) - 6); }
-      if (Ks[k - 1] <= 8 && Ks[k] > 8) { x.fillStyle = css("--bull"); x.fillText("▲", px - 5, Y(bars[k].l) + 16); }
-    }
-  }
-  function drawSparks() {
-    document.querySelectorAll("canvas.mini").forEach(function (cv) {
-      var g = fit(cv), x = g.x, W = g.w, H = g.h, r = rng(+cv.dataset.seed), t = cv.dataset.spark;
-      x.clearRect(0, 0, W, H); x.lineWidth = 1.5;
-      if (t === "stoch") {
-        x.strokeStyle = css("--line"); x.setLineDash([2, 3]); [0.15, 0.85].forEach(function (f) { x.beginPath(); x.moveTo(0, H * f); x.lineTo(W, H * f); x.stroke(); }); x.setLineDash([]);
-        x.strokeStyle = css("--vwap"); x.beginPath(); for (var i = 0; i <= 60; i++) { var v = 0.5 + 0.42 * Math.sin(i / 5 + r() * 0.6); x.lineTo(i / 60 * W, H * (1 - v)); } x.stroke();
-      } else if (t === "pattern") {
-        var P = [0.8, 0.15, 0.6, 0.3, 0.95].map(function (v, i) { return [8 + i / 4 * (W - 16), 6 + v * (H - 12)]; });
-        x.fillStyle = css("--chip"); x.beginPath(); x.moveTo(P[0][0], P[0][1]); P.forEach(function (q) { x.lineTo(q[0], q[1]); }); x.closePath(); x.fill();
-        x.strokeStyle = css("--vwap"); x.beginPath(); P.forEach(function (q, i) { i ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1]); }); x.stroke();
-        x.fillStyle = css("--muted"); x.font = "10px " + css("--f-mono"); ["X", "A", "B", "C", "D"].forEach(function (s, i) { x.fillText(s, P[i][0] + 3, P[i][1] < H / 2 ? P[i][1] + 12 : P[i][1] - 4); });
-      } else if (t === "bars") {
-        var n = 14, w = W / n; for (var k = 0; k < n; k++) { var up = r() > 0.45, hgt = (k === 6 ? 0.35 : k === 7 ? 0.18 : 0.2 + r() * 0.45) * H, y0 = H / 2 - hgt / 2 + (r() - 0.5) * 10; x.fillStyle = css(k === 7 ? "--vwap" : up ? "--bull" : "--bear"); x.fillRect(k * w + w * 0.2, y0, w * 0.6, hgt); }
-      } else {
-        [0.22, 0.5, 0.78].forEach(function (f, i) { x.strokeStyle = css(i === 1 ? "--vwap" : "--band1"); x.lineWidth = i === 1 ? 2.5 : 1.5; x.beginPath(); x.moveTo(0, H * f); x.lineTo(W, H * f); x.stroke(); });
-        x.strokeStyle = css("--muted"); x.lineWidth = 1; x.beginPath(); for (var m = 0; m <= 40; m++) x.lineTo(m / 40 * W, H * (0.5 + 0.3 * Math.sin(m / 4) + (r() - 0.5) * 0.1)); x.stroke();
-      }
-    });
-  }
-  function redraw() { drawHero(); drawSparks(); }
-  render("all"); drawHero();
-  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(redraw, 120); });
-  try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redraw); } catch (e) {}
-  new MutationObserver(redraw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(redraw);
-
-  // ---- contact form (sample: nothing is sent)
   var form = document.getElementById("contact-form"), out = document.getElementById("c-out");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var n = form.elements.name.value.trim(), m = form.elements.email.value.trim();
     if (!n || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)) { out.className = ""; out.textContent = "Add your name and a valid email address, then send again."; return; }
-    out.className = "sent"; out.textContent = "Thanks, " + n + ". This sample form doesn't send anything yet; on the live site it will reach the o2a inbox.";
-    form.reset();
+    if (!FORM) { out.className = ""; out.textContent = "The contact form is not connected yet. Please try again soon."; return; }
+    out.className = ""; out.textContent = "Sending...";
+    fetch(FORM, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
+      .then(function (r) { if (!r.ok) throw new Error(String(r.status)); out.className = "sent"; out.textContent = "Thanks, " + n + ". We received your request and will reply by email."; form.reset(); })
+      .catch(function () { out.className = ""; out.textContent = "Sending failed. Check your connection and try again."; });
   });
-  document.getElementById("yr").textContent = String(new Date().getFullYear());
 })();
 </script>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:1.1rem">o2a</div>
+    <nav aria-label="Legal">
+      <a href="legal/terms.html">Terms of use</a>
+      <a href="legal/privacy.html">Privacy policy</a>
+      <a href="legal/refunds.html">Refund policy</a>
+      <a href="legal/risk.html">Risk disclaimer</a>
+    </nav>
+    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
+    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
+    <p>© <span class="yr">2026</span> o2a</p>
+  </div>
+</footer>
+<script>document.querySelectorAll(".yr").forEach(function (e) { e.textContent = String(new Date().getFullYear()); });</script>
 </body>
 </html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AB=CD Pattern · o2a</title>
+<meta name="description" content="Detects AB=CD swing patterns, draws the reversal zone at D, and tracks rejection and break-and-retest signals with targets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="o2a home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="var(--ink)"/><path d="M5 19 C9 9, 13 9, 15 15 S21 21, 25 11" fill="none" stroke="var(--vwap)" stroke-width="2.6" stroke-linecap="round"/></svg>
+      o2a
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="../index.html#indicators">Indicators</a>
+      <a href="../index.html#method">How we build</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn primary" href="../index.html#contact">Get access</a>
+  </div>
+</header>
+<main id="top">
+
+  <section class="wrap ind-hero">
+    <p class="crumb"><a href="../index.html#indicators">Indicators</a> / AB=CD Pattern</p>
+    <span class="eyebrow">Harmonic pattern</span>
+    <h1>AB=CD Pattern</h1>
+    <p class="lede">Finds four-point AB=CD patterns from zigzag swing pivots on the chart timeframe and draws them. At point D it draws an inner and an outer reversal zone (PRZ) and fires signals when price rejects or breaks those zones. Each signal can open a tracked position with up to four targets, a stop and optional breakeven, and a statistics table counts the results. This description is taken from the MT5 port (V1.10); the TradingView v3.00 source was not available.</p>
+    <div class="platforms"><span class="pill">TradingView</span><span class="pill">MetaTrader 5</span></div>
+    <figure class="shot"><img src="../img/abcd.jpg" alt="AB=CD Pattern on a TradingView chart (XAUUSD)" loading="eager"><figcaption>Real TradingView chart, XAUUSD.</figcaption></figure>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <div class="block"><h2 style="font-size:1.4rem">What it draws</h2><ul><li>Pattern legs A-B, B-C, C-D with optional shaded wings, vertex labels A, B, C and optional ratio labels</li><li>Inner PRZ box (reversal side of D) and outer PRZ box (beyond D), extending until mitigated (max 120 active each)</li><li>Live forming pattern at point D</li><li>Signal markers: PAT, IWR, ICR, OWR, OCR (arrows) and B&amp;R (bubble)</li><li>Positions: entry, SL and TP1-TP4 lines with labels and risk/reward zones (closed positions kept: 20)</li><li>Statistics table: per signal type - signals, trades, open, Win %, TP1, TP2, TP3, TP4, SL, average R, net R (R model selectable)</li></ul></div>
+    <div class="block"><h2 style="font-size:1.4rem">Signals</h2><dl class="sig"><div><dt>PAT (Pattern Formed)</dt><dd>Fires when a new AB=CD is confirmed on a closed bar. Points are the last four alternating swing pivots A-B-C-D (bullish: A high, B low, C high, D low; bearish mirrored). Rules: BC = 0.618-0.786 of AB and CD = 1.272-1.618 of BC, each band widened by the Fibonacci Error Tolerance % (default 10%); symmetry |CD - AB| / AB at most tolerance x 2 (20%); AB and CD each at least 0.8 x ATR(14); A to D length 10-300 bars. Long for bullish, short for bearish.</dd></div><div><dt>IWR (Inner Wick Rejection)</dt><dd>Bullish example: price has cleared above the inner box, then a bar's low dips into the inner box but stays at or above D, and the bar closes back above the inner box. Long.</dd></div><div><dt>ICR (Inner Close Rejection)</dt><dd>Bullish example: after clearing above the inner box, a bar closes inside it, and a later bar closes back above it, without the inner box being broken through D. Long.</dd></div><div><dt>OWR (Outer Wick Rejection)</dt><dd>Bullish example: while the outer box is alive and armed (a bar has traded fully above D), a bar's low goes below D and the bar closes back above D. Long.</dd></div><div><dt>OCR (Outer Close Rejection)</dt><dd>Bullish example: while the outer box is alive, a bar closes below D, and a later bar closes back above D. Long.</dd></div><div><dt>B&amp;R (Outer Break &amp; Retest)</dt><dd>Bullish-pattern example: price breaks below the outer box far edge (by close by default), then on a later bar the high reaches that edge and the bar closes back below it. Short (opposite to the pattern). Cancelled if price closes back above D first.</dd></div><div><dt>Limits</dt><dd>Up to 5 rejection signals per type per pattern; signals stop 20 bars after confirmation (0 = no limit); signals on bar close only by default.</dd></div></dl></div>
+  </div></section>
+  <section class="band"><div class="wrap" style="display:grid;gap:24px">
+    <div class="block"><h2 style="font-size:1.4rem">Main settings</h2><div class="tbl"><table><thead><tr><th>Setting</th><th>Default</th><th>What it does</th></tr></thead><tbody><tr><td>ZigZag Swing Period / Pivot Confirmation Depth</td><td>10 / 3</td><td>A swing pivot must beat 10 bars on the left and is confirmed 3 bars later.</td></tr><tr><td>Fibonacci Error Tolerance %</td><td>10</td><td>Widens the ratio bands; with the symmetry multiplier sets how equal AB and CD must be.</td></tr><tr><td>BC Retracement of AB / CD Extension of BC</td><td>0.618-0.786 / 1.272-1.618</td><td>Ratio rules of the pattern.</td></tr><tr><td>AB=CD Symmetry Tolerance (x Fib Tolerance)</td><td>2.0</td><td>Maximum difference between the AB and CD leg lengths.</td></tr><tr><td>Minimum AB / CD Leg Size (x ATR 14)</td><td>0.8</td><td>Skips small patterns.</td></tr><tr><td>Zone Size Method</td><td>ATR Multiple (1.4 x ATR 14)</td><td>PRZ height; also Auto, % of CD leg or fixed distance.</td></tr><tr><td>Inner / Outer box % and mitigation</td><td>Inner 38.6% (Close) / Outer 70.5% (Wick)</td><td>Size of each box and whether a wick or a close mitigates it.</td></tr><tr><td>TP Mode</td><td>R multiple: TP1 1R, TP2 2R, TP3 7R, TP4 9R</td><td>Alternative 'Pattern' mode: TP1 = midpoint of C-D, TP2 = C, TP3 = midpoint of A-C, TP4 = A. B&amp;R always uses R multiples.</td></tr><tr><td>SL anchors and buffers</td><td>Inner entries: outer far edge + 0.2 ATR; Outer entries: outer far edge + 0.5 ATR; B&amp;R: retest candle wick + 30% of PRZ; PAT uses the Outer group</td><td>Stop placement per signal group.</td></tr><tr><td>Move SL to Entry After / R Model</td><td>Off / All-In @ TP4</td><td>Optional breakeven after TP1-TP3; how the statistics table counts R (equal scale-out or all-in at one TP).</td></tr></tbody></table></div></div>
+    <div class="cols">
+      <div class="block"><h2 style="font-size:1.4rem">Timeframes</h2><p>The MT5 port runs entirely on the chart timeframe (no higher-timeframe input). The project's Butterfly README says the TradingView AB=CD [o2a v3.00] is built on the same base as Butterfly, which runs on a script-built 'Pattern Timeframe'; that version could not be checked because its source is not on disk.</p><h2 style="font-size:1.4rem">Alerts</h2><p>MT5 port: none. TradingView v3.00: unclear (source not available; the Butterfly source says its alerts were removed relative to the AB=CD base, which suggests the AB=CD base has alerts, but their conditions are unknown).</p></div>
+      <div class="block"><h2 style="font-size:1.4rem">Closed candles and repainting</h2><ul><li>Swing pivots are confirmed 3 bars after the pivot bar, so a pattern appears 3 bars after point D.</li><li>Signals fire on closed bars only when 'Signal on Bar Close Only' is on (default); positions are managed on every bar, and a bar touching both SL and a TP counts as SL first.</li><li>The live forming pattern at point D updates with price until the pivot is confirmed.</li></ul></div>
+    </div>
+    <div class="block"><h2 style="font-size:1.4rem">On MetaTrader 5</h2><ul><li>This port reproduces the Pine V1.10 version (verified V1.04 engine plus PAT signal, positions with 4 TPs, Inner/Outer/B&amp;R stops, breakeven, risk/reward zones and the statistics table). Features the Butterfly README attributes to the v3.00 base (Pattern Timeframe HTF engine, TSI/RSI signals in the PRZ, volume profile, pattern-data table) are NOT in this MT5 port.</li><li>MT5 defaults are the author's live chart settings of the V1.10 copy.</li><li>MT5-only: mid price option (bid + half spread), 20,000 chart bars calculated, Pine-style 500-object drawing limit, CSV dump of patterns / signals / positions.</li><li>The forming chart bar is worked on a copy of the state so nothing is committed until the bar closes.</li></ul></div>
+    <div><a class="btn primary" href="../index.html#contact">Get access</a> <a class="btn ghost" href="../index.html#indicators">All indicators</a></div>
+  </div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:1.1rem">o2a</div>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms of use</a>
+      <a href="../legal/privacy.html">Privacy policy</a>
+      <a href="../legal/refunds.html">Refund policy</a>
+      <a href="../legal/risk.html">Risk disclaimer</a>
+    </nav>
+    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
+    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
+    <p>© <span class="yr">2026</span> o2a</p>
+  </div>
+</footer>
+<script>document.querySelectorAll(".yr").forEach(function (e) { e.textContent = String(new Date().getFullYear()); });</script>
+</body>
+</html>

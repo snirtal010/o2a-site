@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Butterfly · o2a</title>
+<meta name="description" content="Finds Butterfly harmonic patterns on a higher timeframe and marks the reversal zone, entry signals and single-target positions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="o2a home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="var(--ink)"/><path d="M5 19 C9 9, 13 9, 15 15 S21 21, 25 11" fill="none" stroke="var(--vwap)" stroke-width="2.6" stroke-linecap="round"/></svg>
+      o2a
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="../index.html#indicators">Indicators</a>
+      <a href="../index.html#method">How we build</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn primary" href="../index.html#contact">Get access</a>
+  </div>
+</header>
+<main id="top">
+
+  <section class="wrap ind-hero">
+    <p class="crumb"><a href="../index.html#indicators">Indicators</a> / Butterfly</p>
+    <span class="eyebrow">Harmonic pattern</span>
+    <h1>Butterfly <span style="color:var(--muted);font-weight:600">v1.00</span></h1>
+    <p class="lede">Detects the five-point Butterfly harmonic pattern (X-A-B-C-D) on higher-timeframe candles that the script builds itself, and draws it on your chart. At point D it draws a Potential Reversal Zone (PRZ) split into an inner and an outer box, and fires signals when price rejects or breaks those boxes, plus optional TSI and RSI signals inside the zone. Each signal can open a tracked position with one target (TP1) and a stop, and tables summarise the signals and the last pattern's data.</p>
+    <div class="platforms"><span class="pill">TradingView</span><span class="pill">MetaTrader 5</span></div>
+    <figure class="shot"><img src="../img/butterfly.jpg" alt="Butterfly on a TradingView chart (XAUUSD)" loading="eager"><figcaption>Real TradingView chart, XAUUSD.</figcaption></figure>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <div class="block"><h2 style="font-size:1.4rem">What it draws</h2><ul><li>Pattern legs X-A, A-B, B-C, C-D (solid), dotted X-B and B-D projections, dashed X-D line, and shaded 'wings' (triangles XAB and BCD)</li><li>Point labels X, A, B, C and ratio badges on each leg (AB/XA, BC/AB, CD/BC, AD/XA)</li><li>Inner and outer PRZ boxes at point D that keep extending right until mitigated</li><li>Live forming pattern preview while the last leg develops</li><li>Signal labels: PAT, IWR, ICR, OWR, OCR, B&amp;R, TSI and RSI (HTF and chart-TF)</li><li>The higher-timeframe signal candle drawn over its chart bars (Standard, Heikin Ashi or Momentum Heikin Ashi) with signal tags; optional small chart-TF markers</li><li>Positions: entry, TP1 and SL lines with optional risk/reward zones (closed positions kept on chart: 20)</li><li>Pattern volume profile built at confirmation: price bins, POC line (fades after a wick touches it), buy/sell bars and % labels</li><li>Statistics table (one row per enabled signal: signals, trades, Win % = TP1 hit, SL %) and Pattern Data table for the last confirmed pattern (point times, volume / relative volume, leg sizes, ratios, durations, PRZ edges, volume-profile POC / VAH / VAL)</li></ul></div>
+    <div class="block"><h2 style="font-size:1.4rem">Signals</h2><dl class="sig"><div><dt>PAT (Pattern Formed)</dt><dd>Fires on the HTF candle where a Butterfly is confirmed, i.e. the D pivot is locked by the Pivot Confirmation bars. Rules (each band widened by the Fibonacci Error Tolerance %): AB = 0.75-0.82 of XA, BC = 0.382-0.886 of AB, CD = 1.618-2.618 of BC, AD = 1.272-1.618 of XA; XA and CD legs each at least 0.8 x HTF ATR(14); X to D length within the min/max HTF bars. Long when D is a low (bullish pattern), short when D is a high.</dd></div><div><dt>IWR (Inner Wick Rejection)</dt><dd>Bullish example (bearish mirrored): price first clears above the inner box, then an HTF candle wicks back into it with its low staying at or above D, and closes back above the inner box. Long.</dd></div><div><dt>ICR (Inner Close Rejection)</dt><dd>Bullish example: price clears above the inner box, an HTF candle then closes inside it, and a later HTF candle closes back above it, with D never broken. Long.</dd></div><div><dt>OWR (Outer Wick Rejection)</dt><dd>Bullish example: while the outer box is not mitigated, an HTF candle wicks below D into the outer box (a sweep) and closes back above D. Long.</dd></div><div><dt>OCR (Outer Close Rejection)</dt><dd>Bullish example: while the outer box is not mitigated, an HTF candle closes below D inside the outer box, and a later HTF candle closes back above D. Long.</dd></div><div><dt>B&amp;R (Outer Break &amp; Retest)</dt><dd>Pattern failure, opposite direction. Bullish-pattern example: price breaks below the outer box bottom (on a close by default, or a wick), then a later HTF candle retests that edge from below and closes back below it. Short. Cancelled if price closes back beyond D first. Fires once per pattern.</dd></div><div><dt>TSI Cross (HTF / CTF)</dt><dd>Inside the live part of the selected PRZ box of a confirmed pattern (candle touches it by default): the TSI line (13 / 7, signal 7) crosses up through its signal line while TSI is at or below the oversold level (HTF -25, CTF -30) for a long on a bullish pattern, or crosses down while at or above overbought (HTF 25, CTF 30) for a short on a bearish pattern. HTF signals use the closed HTF candle and can open positions; CTF signals use the closed chart candle and are labels only. Once per pattern per timeframe by default.</dd></div><div><dt>RSI Bands (HTF / CTF)</dt><dd>Inside the live PRZ box: long when RSI(14) is at or below Over Sold (19.9), or in the Support band (above 19.9 and at or below 34.9) with a strong bullish candle (body at least 1.2 x the average body of the last 20 candles). Short mirrored with Over Buy 79.9 and Resist 67.9. HTF opens positions, CTF is labels only.</dd></div></dl></div>
+  </div></section>
+  <section class="band"><div class="wrap" style="display:grid;gap:24px">
+    <div class="block"><h2 style="font-size:1.4rem">Main settings</h2><div class="tbl"><table><thead><tr><th>Setting</th><th>Default</th><th>What it does</th></tr></thead><tbody><tr><td>Pattern Timeframe</td><td>15</td><td>The whole engine runs on candles of this timeframe (built inside the script); must be at or above the chart timeframe.</td></tr><tr><td>Swing Period (HTF bars)</td><td>10</td><td>Left-side lookback a swing pivot must beat.</td></tr><tr><td>Pivot Confirmation (HTF bars)</td><td>3</td><td>HTF bars to the right needed to confirm a pivot (the pattern is confirmed this many bars after D).</td></tr><tr><td>Direction</td><td>Long and Short</td><td>Only long, only short, or both.</td></tr><tr><td>Fibonacci Error Tolerance %</td><td>10</td><td>Widens every ratio band; also sizes the Auto PRZ.</td></tr><tr><td>Minimum XA / CD Leg Size (x HTF ATR 14)</td><td>0.8</td><td>Skips patterns with legs that are too small.</td></tr><tr><td>Zone Size</td><td>Auto (Original)</td><td>PRZ height: Auto = 2 x max(last leg x tolerance, HTF ATR x 0.7), or ATR multiple (1.4), % of last leg (20), fixed price (2.0). Inner and outer boxes each take 50% of it, mitigated by wick.</td></tr><tr><td>Max Rejection Signals per Type per Pattern / Signal Window</td><td>1 / 0 (no limit)</td><td>How many IWR/ICR/OWR/OCR signals a pattern can give, and for how many HTF bars.</td></tr><tr><td>TP1 Mode</td><td>Pattern (0.382 retracement of AD, from D)</td><td>Single target: the pattern TP1 or an R multiple (R = |entry - SL|, default 1.0). B&amp;R always uses the R multiple.</td></tr><tr><td>Stop Loss anchors (per signal group)</td><td>PAT: Outer Far Edge; IWR/ICR: D; OWR/OCR: Outer Far Edge; B&amp;R: Signal Candle H/L; TSI/RSI: Outer Far Edge; each + 0.2 x HTF ATR</td><td>Where the stop of each position goes; a signal whose stop would sit on the wrong side of entry is skipped.</td></tr></tbody></table></div></div>
+    <div class="cols">
+      <div class="block"><h2 style="font-size:1.4rem">Timeframes</h2><p>Pattern Timeframe input (default 15 minutes); HTF candles are aggregated inside the script from chart bars (no request.security). If it is set below the chart timeframe, the chart timeframe is used. Everything is drawn on the chart timeframe. TSI and RSI signals run on both the pattern timeframe (HTF) and the chart timeframe (CTF).</p><h2 style="font-size:1.4rem">Alerts</h2><p>Pine: none (the source header states all alerts were removed in v1.00). MT5: no alerts; the port exposes signal buffers (SigLong / SigShort, a bitmask of the signals fired on each bar).</p></div>
+      <div class="block"><h2 style="font-size:1.4rem">Closed candles and repainting</h2><ul><li>HTF candles are built inside the script; a completed HTF candle is processed on the chart bar that closes it (closed-bar check), or on the first chart bar of the next HTF candle.</li><li>Swing pivots need Pivot Confirmation HTF bars to the right, so a pattern (and PAT) appears that many HTF bars after point D.</li><li>PRZ, rejection and HTF TSI/RSI signals use closed HTF candles; CTF TSI/RSI signals use closed chart bars only.</li><li>The 'Live Forming Pattern' preview includes the still-forming HTF candle and changes until it closes (by design).</li><li>Positions are the indicator's own statistics, not trades: one per signal, opened at the signal candle's close; TP1/SL checked on closed HTF candles (or every chart bar if Tracking = Chart Bars); if TP1 and SL are touched in the same candle it counts as SL.</li></ul></div>
+    </div>
+    <div class="block"><h2 style="font-size:1.4rem">On MetaTrader 5</h2><ul><li>MT5 defaults are the author's live chart settings: Pattern Timeframe M5, Swing Period 6, Pivot Confirmation 2, Zone Size ATR x 1.4, TP1 Mode R multiple at 2R, Bullish/Bearish colour palette.</li><li>MT5-only: mid price option (bid + half spread) because TradingView plots mid prices and MT5 bars are bid; server-clock setting (winter/summer offsets) for the Pattern Data table times.</li><li>MT5-only: automatic contrast for black charts and an automatic table theme; transparency emulated by blending with the background and overlapping fills drawn on one canvas.</li><li>MT5-only: verification CSV dump (one row per pattern, signal and position) and signal buffers for EAs.</li><li>MT5 limits handled: object text capped at 63 characters (long text is split). After a recompile the indicator reloads only on the next tick (switch timeframe at the weekend).</li><li>README check against TradingView (XAUUSD M1, pattern timeframe 5): last pattern's points, times and volume profile identical; differences traced to broker price feed (e.g. a Sunday-open spike moved a pivot).</li></ul></div>
+    <div><a class="btn primary" href="../index.html#contact">Get access</a> <a class="btn ghost" href="../index.html#indicators">All indicators</a></div>
+  </div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:1.1rem">o2a</div>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms of use</a>
+      <a href="../legal/privacy.html">Privacy policy</a>
+      <a href="../legal/refunds.html">Refund policy</a>
+      <a href="../legal/risk.html">Risk disclaimer</a>
+    </nav>
+    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
+    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
+    <p>© <span class="yr">2026</span> o2a</p>
+  </div>
+</footer>
+<script>document.querySelectorAll(".yr").forEach(function (e) { e.textContent = String(new Date().getFullYear()); });</script>
+</body>
+</html>

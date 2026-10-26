@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MSO MTF · o2a</title>
+<meta name="description" content="A market-structure oscillator on three timeframes, with structure breaks, reversal zones, big candles, trend tracking and a confluence dashboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="o2a home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="var(--ink)"/><path d="M5 19 C9 9, 13 9, 15 15 S21 21, 25 11" fill="none" stroke="var(--vwap)" stroke-width="2.6" stroke-linecap="round"/></svg>
+      o2a
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="../index.html#indicators">Indicators</a>
+      <a href="../index.html#method">How we build</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn primary" href="../index.html#contact">Get access</a>
+  </div>
+</header>
+<main id="top">
+
+  <section class="wrap ind-hero">
+    <p class="crumb"><a href="../index.html#indicators">Indicators</a> / MSO MTF</p>
+    <span class="eyebrow">Multi-timeframe structure</span>
+    <h1>MSO MTF <span style="color:var(--muted);font-weight:600">v2.16</span></h1>
+    <p class="lede">Turns market structure into a 0-100 oscillator: for short-, intermediate- and long-term swing structure it measures where the close sits in the range since the last structure break, and blends the three with weights. It runs the same engine on the chart timeframe and two higher timeframes (default 15 and 60 minutes), draws break-of-structure / change-of-character lines, overbought / oversold reversal zones, big 'displacement' candles and a big-candle trend tracker, and a dashboard combines the timeframes into one confluence score.</p>
+    <div class="platforms"><span class="pill">TradingView</span></div>
+    <figure class="shot"><img src="../img/mso.jpg" alt="MSO MTF on a TradingView chart (XAUUSD)" loading="eager"><figcaption>Real TradingView chart, XAUUSD.</figcaption></figure>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <div class="block"><h2 style="font-size:1.4rem">What it draws</h2><ul><li>Oscillator pane: chart-timeframe oscillator with gradient colour, overbought (85) / oversold (15) shading, 50 line and bullish / bearish gradient fills</li><li>Oscillator pane: cycle histogram (oscillator minus its EMA, centred on 50), optional ST / IT / LT component lines, MTF and HTF oscillator lines</li><li>Price chart: BoS / CHoCH lines (and optional labels) for short, intermediate and long-term structure per timeframe</li><li>Price chart: overbought / oversold reversal zones with stage (armed, exhaustion, reversal, invalidated grey, expired faded) and ★ grade</li><li>Price chart: big candles - chart-TF bars coloured, MTF / HTF candles drawn over their chart bars (Candle, Heikin Ashi or Momentum HA), optional labels with size and sequence number</li><li>Price chart: trend-tracker stop lines, mid lines, start markers and optional background per timeframe</li><li>Optional cross dots: ⦁ oscillator / cycle 50-crosses, ◆ MTF and ■ HTF oscillator 50-crosses</li><li>Dashboard (price chart or pane): confluence score with gauge and TF alignment; per-TF oscillator, bias, cycle, strength; structure; big candles; trend; optional pivot settings</li></ul></div>
+    <div class="block"><h2 style="font-size:1.4rem">Signals</h2><dl class="sig"><div><dt>Structure break: BoS / CHoCH</dt><dd>For each term (short, intermediate, long) on each timeframe: a bullish break when the close goes above the last swing high (once per swing), a bearish break when the close goes below the last swing low. It is a CHoCH (change of character) when it breaks against the previous trend of that term, otherwise a BoS (break of structure, numbered). Short-term swings come from the pivot engine (Bars, ATR Reversal or Bars + ATR); intermediate-term swings are built from short-term swing peaks / troughs, and long-term from intermediate.</dd></div><div><dt>Reversal zone (OB / OS)</dt><dd>Stage 1 armed: the oscillator enters overbought (≥ 85) or oversold (≤ 15); the zone follows the extreme high (low), depth = Depth x ATR. Stage 2 exhaustion: the oscillator leaves the zone while the cycle has turned against the move; the zone freezes. Stage 3 reversal: a short-term CHoCH against the move (can skip stage 2). Invalidated: a close beyond the frozen extreme. Expired: older than Zone Lifetime (150 TF bars). ★ grade = how many of CTF / MTF / HTF were overbought (oversold) together while the zone was armed.</dd></div><div><dt>Big candle</dt><dd>Body ≥ 1.5 x ATR (default mode; or range ≥ 2.0 x ATR, or body ≥ 2.5 x average body of 20 candles), and body at least 60% of the candle range. Same-direction big candles count up a sequence; an opposite big candle flips the sequence only if it closes beyond the reference candle's low (high) by default, otherwise it is marked as a pullback.</dd></div><div><dt>Trend Tracker start / stop</dt><dd>A big candle starts a trend in its direction with a stop at the candle low (high) minus (plus) 3 x ATR. The stop only moves with the trend; a close through it ends the trend (Flat). An opposite big candle flips the trend unless it is only a pullback (Ignore Pullbacks on).</dd></div><div><dt>Oscillator 50 crosses (optional dots)</dt><dd>The chart-TF oscillator, the cycle, the MTF oscillator or the HTF oscillator changes side of 50.</dd></div><div><dt>Confluence state</dt><dd>TF Strength = average of (oscillator - 50) x 2 and the weighted ST / IT / LT trend score x 100. Confluence = weighted average of CTF / MTF / HTF strength (weights 1 / 2 / 3). Strong Bull ≥ 50, Bull ≥ 20, Bear ≤ -20, Strong Bear ≤ -50, otherwise Neutral.</dd></div></dl></div>
+  </div></section>
+  <section class="band"><div class="wrap" style="display:grid;gap:24px">
+    <div class="block"><h2 style="font-size:1.4rem">Main settings</h2><div class="tbl"><table><thead><tr><th>Setting</th><th>Default</th><th>What it does</th></tr></thead><tbody><tr><td>Term Weights ST / IT / LT</td><td>1 / 3 / 2</td><td>Weight of each structure term in the oscillator.</td></tr><tr><td>Oscillator Smoothing / Cycle Length</td><td>4 / 7</td><td>SMA smoothing of the oscillator; EMA length used for the cycle histogram.</td></tr><tr><td>MTF / HTF Values</td><td>Confirmed (no repaint)</td><td>Confirmed updates higher-TF values only when their candle closes; Live follows the forming candle and repaints.</td></tr><tr><td>MTF TF / HTF TF</td><td>15 / 60</td><td>The two higher timeframes (must be at or above the chart timeframe, otherwise the chart timeframe is used, marked *).</td></tr><tr><td>Pivots Mode / L / R (per TF)</td><td>Bars / 1 / 1</td><td>How short-term swings are found: bar-count pivots, ATR reversal (Reversal x 2.0 ATR), or bars plus a minimum leg (Min Leg x 1.0 ATR).</td></tr><tr><td>Overbought ≥ / Oversold ≤</td><td>85 / 15</td><td>Levels for shading, dashboard tags and reversal zones.</td></tr><tr><td>Zone Lifetime (TF bars) / Depth x ATR</td><td>150 / 0.5</td><td>How long a reversal zone stays active and how deep it is.</td></tr><tr><td>Big Candles Mode and multipliers</td><td>Body x ATR 1.5 (Range x ATR 2.0, Body x Avg 2.5, Avg Len 20, Min Body 60%)</td><td>What counts as a big candle on each TF.</td></tr><tr><td>Trend Tracker Trail x ATR / Ignore Pullbacks</td><td>3.0 / on</td><td>Trailing-stop distance of the big-candle trend and whether pullback candles can flip it.</td></tr><tr><td>TF Weights CTF / MTF / HTF and Bias / Strong</td><td>1 / 2 / 3 and 20 / 50</td><td>How the confluence score combines timeframes and where Bull / Strong Bull begin.</td></tr></tbody></table></div></div>
+    <div class="cols">
+      <div class="block"><h2 style="font-size:1.4rem">Timeframes</h2><p>Three engines: the chart timeframe (CTF), a mid timeframe (MTF, default 15) and a higher timeframe (HTF, default 60), each with its own pivot, zone, big-candle and trend settings. Higher timeframes below the chart timeframe fall back to the chart timeframe.</p><h2 style="font-size:1.4rem">Alerts</h2><p>Pine: six alertcondition() entries - Confluence → Strong Bull, Confluence → Strong Bear, Zone reversal ▲ (from oversold), Zone reversal ▼ (from overbought), Trend ▲ start (any TF), Trend ▼ start (any TF). Plus one alert() call per bar at bar close that bundles every enabled event (structure breaks for chosen terms, reversal-zone stages, trend start/stop, strong confluence, optionally big candles and oscillator 50-crosses) per enabled timeframe. MT5: the chart indicator can raise a popup Alert() with the same per-bar message on bar close (off by default).</p></div>
+      <div class="block"><h2 style="font-size:1.4rem">Closed candles and repainting</h2><ul><li>Default 'Confirmed (no repaint)': MTF / HTF values come from request.security with lookahead_on on the previous (closed) higher-TF bar, so they change only when that candle closes.</li><li>'Live (repaints)': higher-TF values follow the forming candle and can change until it closes; the source notes a break undone and re-made inside the same candle can draw / alert twice.</li><li>The bundled alert() fires once per bar close (alert.freq_once_per_bar_close). Chart-TF structure lines and markers are evaluated on every bar, so on the live bar they can still change before it closes.</li><li>Short-term pivots are confirmed R bars later (Bars mode) or after an ATR reversal, which can take long in one-way moves.</li></ul></div>
+    </div>
+    
+    <div><a class="btn primary" href="../index.html#contact">Get access</a> <a class="btn ghost" href="../index.html#indicators">All indicators</a></div>
+  </div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:1.1rem">o2a</div>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms of use</a>
+      <a href="../legal/privacy.html">Privacy policy</a>
+      <a href="../legal/refunds.html">Refund policy</a>
+      <a href="../legal/risk.html">Risk disclaimer</a>
+    </nav>
+    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
+    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
+    <p>© <span class="yr">2026</span> o2a</p>
+  </div>
+</footer>
+<script>document.querySelectorAll(".yr").forEach(function (e) { e.textContent = String(new Date().getFullYear()); });</script>
+</body>
+</html>

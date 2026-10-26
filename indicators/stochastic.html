@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stochastic · o2a</title>
+<meta name="description" content="A Stochastic that marks overbought/oversold exits, double tops/bottoms with liquidity grabs, and higher-timeframe signals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="o2a home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="var(--ink)"/><path d="M5 19 C9 9, 13 9, 15 15 S21 21, 25 11" fill="none" stroke="var(--vwap)" stroke-width="2.6" stroke-linecap="round"/></svg>
+      o2a
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="../index.html#indicators">Indicators</a>
+      <a href="../index.html#method">How we build</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn primary" href="../index.html#contact">Get access</a>
+  </div>
+</header>
+<main id="top">
+
+  <section class="wrap ind-hero">
+    <p class="crumb"><a href="../index.html#indicators">Indicators</a> / Stochastic</p>
+    <span class="eyebrow">Oscillator · VWAP</span>
+    <h1>Stochastic <span style="color:var(--muted);font-weight:600">v2.00</span></h1>
+    <p class="lede">A classic Stochastic (or optional Stochastic RSI) in its own pane that fires a reversal signal when %K leaves the overbought or oversold zone. It also spots double tops and double bottoms where price pokes past the previous peak and closes back (a liquidity grab), and runs the same signals on a higher timeframe. An anchored VWAP with bands, an optional higher-timeframe swing VWAP, kill-zone shading and a status table help filter and read the signals.</p>
+    <div class="platforms"><span class="pill">TradingView</span><span class="pill">MetaTrader 5</span></div>
+    <figure class="shot"><img src="../img/stochastic.jpg" alt="Stochastic on a TradingView chart (XAUUSD)" loading="eager"><figcaption>Real TradingView chart, XAUUSD.</figcaption></figure>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <div class="block"><h2 style="font-size:1.4rem">What it draws</h2><ul><li>Oscillator pane: %K line (navy) and %D line (maroon), Overbought / 50 / Oversold lines with a shaded background between them</li><li>Oscillator pane: REV SHORT / REV LONG labels (number of zone entries in the cycle and price change since the zone was entered) and DOUBLE TOP / DOUBLE BOTTOM + LIQ GRAB labels (peak 1, wick, close, rejection in points)</li><li>Oscillator pane: kill-zone background colour (Asia, London, NY AM, custom) with the zone name at its start</li><li>Price chart: anchored VWAP line with inner (1x) and outer (2x) bands, a light fill between the inner bands and an optional 'liquidity band' fill between inner and outer bands</li><li>Price chart: higher-timeframe Swing VWAP step line with inner / outer bands, green when the swing direction is up and red when down</li><li>Price chart: triangle markers 'REV S' / 'REV L', faded smaller 'REVS×' / 'REVL×' markers when a reversal was blocked by a filter, and 'DBL TOP +LG' / 'DBL BOT +LG' markers</li><li>Price chart: dashed line joining the two peaks (or troughs) of a double top / bottom</li><li>Price chart: diamond markers 'HTF REV L/S' and 'HTF DBL B/T', an HTF label with the timeframe (and both peak / trough prices for doubles), and dashed horizontal lines at both HTF peaks / troughs</li><li>Status table (top right): mode, VWAP zone of price and long-filter pass, zone state (OB/OS with entry count), current pattern, last signal and the expected next signal, HTF signal state, distance from VWAP, active kill zone (New York time), HTF swing trend and which directions the filter allows. Note: as coded, the 'Hist. %' cell divides a count by itself, so it shows 100% once any transition has happened</li><li>Hidden plot 'Signal Point' (+1 long, -1 short, 0 none) for use by other scripts</li></ul></div>
+    <div class="block"><h2 style="font-size:1.4rem">Signals</h2><dl class="sig"><div><dt>REV Short</dt><dd>%K crosses back down below the Overbought level (closes the overbought visit), the same exit is not a double top, and price passes the active filters: close at or below the chosen VWAP threshold (VWAP / upper 1σ / upper 2σ, or no VWAP filter) and the HTF Swing VWAP filter (HTF swing trend down, or close below the HTF VWAP, or off). If a filter blocks it, a faded 'REVS×' marker is drawn instead.</dd></div><div><dt>REV Long</dt><dd>Mirror of REV Short: %K crosses back up above the Oversold level, the exit is not a double bottom, and close is at or above the chosen VWAP threshold and passes the HTF Swing VWAP filter. Blocked exits show a faded 'REVL×' marker.</dd></div><div><dt>DBL TOP + LG (double top with liquidity grab)</dt><dd>On an overbought exit: the highest high of this overbought visit is within the Double Top/Bot Tolerance % of the previous overbought visit's highest high, AND the exit bar's high reaches the previous peak but the bar closes below it. Not subject to the VWAP or HTF filters.</dd></div><div><dt>DBL BOT + LG (double bottom with liquidity grab)</dt><dd>Mirror on an oversold exit: the lowest low of this oversold visit is within the tolerance % of the previous visit's lowest low, AND the exit bar's low reaches the previous trough but the bar closes above it. Not subject to the VWAP or HTF filters.</dd></div><div><dt>HTF REV Long / HTF REV Short</dt><dd>The same REV rule computed on the HTF Signal timeframe's own %K, using only the last completed HTF candle. It shows once, on the first chart bar after that HTF candle closes. Each type can be switched off. If 'Require HTF + CTF alignment' is on, it is shown only when a chart-timeframe long (or short) signal fires on that same bar. Not subject to the VWAP filters.</dd></div><div><dt>HTF DBL BOT / HTF DBL TOP</dt><dd>The double bottom / double top + liquidity grab rule computed on the HTF Signal timeframe, with the same once-per-HTF-close and optional alignment rules as HTF REV.</dd></div><div><dt>Signal Point output</dt><dd>+1 when a chart-timeframe DBL BOT, a REV Long that is not a DBL BOT, or a new HTF long fires (each type has an on/off switch in 'Signal Connector'); -1 for the short equivalents; otherwise 0.</dd></div></dl></div>
+  </div></section>
+  <section class="band"><div class="wrap" style="display:grid;gap:24px">
+    <div class="block"><h2 style="font-size:1.4rem">Main settings</h2><div class="tbl"><table><thead><tr><th>Setting</th><th>Default</th><th>What it does</th></tr></thead><tbody><tr><td>Use StochRSI (instead of Stochastic)</td><td>off</td><td>Switches the oscillator from Stochastic of price to Stochastic of RSI (RSI Length 14, Stoch Length 14, smoothing 3/3).</td></tr><tr><td>%K Length / %K Smoothing / %D Smoothing</td><td>14 / 1 / 3</td><td>Stochastic lookback and smoothing of %K and %D.</td></tr><tr><td>Overbought Level / Oversold Level</td><td>98 / 2</td><td>Zone levels; signals fire when %K leaves these zones.</td></tr><tr><td>Double Top/Bot Tolerance %</td><td>0.5</td><td>How close (in % of price) two consecutive zone peaks / troughs must be to count as a double.</td></tr><tr><td>Anchor (Anchored VWAP)</td><td>Week</td><td>When the VWAP restarts: Session, Week, Month, Quarter, Year, or the start of Asia / London / NY AM / custom kill zone.</td></tr><tr><td>Band Type / Inner / Outer Band Multiplier</td><td>Std Dev / 1.0 / 2.0</td><td>VWAP band width from standard deviation, ATR or a percentage of price.</td></tr><tr><td>Filter signals by</td><td>VWAP</td><td>Off, VWAP, ±1σ or ±2σ: longs need close at/above the level, shorts at/below it.</td></tr><tr><td>HTF Timeframe (HTF Signal)</td><td>60</td><td>Timeframe used for the HTF REV / DBL signals.</td></tr><tr><td>Require HTF + CTF alignment</td><td>off</td><td>Only show an HTF signal when a chart-timeframe signal of the same direction fires on the same bar.</td></tr><tr><td>Enable HTF Swing VWAP / HTF Timeframe / Use as Signal Filter</td><td>on / D / Trend</td><td>Higher-timeframe swing-anchored VWAP (Swing Period 55, APT 21) used as a filter: Trend (swing direction) or Price vs VWAP.</td></tr></tbody></table></div></div>
+    <div class="cols">
+      <div class="block"><h2 style="font-size:1.4rem">Timeframes</h2><p>Oscillator and the main signals run on the chart timeframe. The HTF signal timeframe is an input (default 60 minutes). The HTF Swing VWAP has its own timeframe input (default Daily). The anchored VWAP resets by session, week, month, quarter, year or at a kill-zone start. Kill zones are fixed in New York time: Asia 20:00-00:00, London 02:00-05:00, NY AM 08:30-11:00, plus a custom window.</p><h2 style="font-size:1.4rem">Alerts</h2><p>Pine: no alertcondition() or alert() calls in the source. The hidden 'Signal Point' plot (+1/-1/0) can be read by other scripts. MT5: no alerts in the port.</p></div>
+      <div class="block"><h2 style="font-size:1.4rem">Closed candles and repainting</h2><ul><li>HTF signals use request.security with lookahead_on on values shifted back one HTF bar ([1]), so they only use completed HTF candles and appear on the first chart bar after the HTF candle closes.</li><li>The HTF Swing VWAP uses request.security with lookahead_off and no shift: on the live chart it follows the still-forming HTF candle and can change until that candle closes.</li><li>Chart-timeframe REV and DBL signals are evaluated on every bar with no closed-bar check, so on the live (unclosed) bar a marker can appear or disappear until the bar closes.</li><li>The anchored VWAP is cumulative and updates within the live bar.</li></ul></div>
+    </div>
+    <div class="block"><h2 style="font-size:1.4rem">On MetaTrader 5</h2><ul><li>Two MT5 indicators share one engine file: Stoch_o2a_v200.mq5 (the pane: %K/%D, levels, pane labels, kill zones, table) and Stoch_o2a_v200_Chart.mq5 (the chart: VWAP and bands, swing VWAP, signal markers, HTF labels/lines), because an MT5 indicator draws its buffers in one window only.</li><li>MT5-only: draws the higher-timeframe candle of every HTF signal on the chart.</li><li>MT5-only: colour theme Auto / Light / Dark (Auto reads the chart background); dark-chart presets included.</li><li>MT5-only: a ±3σ VWAP band (display only, not a filter).</li><li>MT5-only: 'Add half the bar spread' option, because MT5 bars are bid prices while TradingView plots mid prices; New York time is set as server time minus an hour offset (default 7, FundingPips); chart bars calculated default 20,000; optional CSV debug dump.</li><li>The MT5 defaults are the author's live chart settings, not the Pine defaults: Overbought/Oversold 95/5, tolerance 0.2%, RSI length 5, VWAP anchor Session, liquidity band off, HTF signal timeframe 15 with alignment required, HTF Swing VWAP off, kill zones off.</li><li>README check against TradingView (XAUUSD M1): most signals land on the same bar; the differences were traced to price-feed and volume differences between brokers (tick volume vs TradingView volume moves the VWAP).</li></ul></div>
+    <div><a class="btn primary" href="../index.html#contact">Get access</a> <a class="btn ghost" href="../index.html#indicators">All indicators</a></div>
+  </div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:1.1rem">o2a</div>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms of use</a>
+      <a href="../legal/privacy.html">Privacy policy</a>
+      <a href="../legal/refunds.html">Refund policy</a>
+      <a href="../legal/risk.html">Risk disclaimer</a>
+    </nav>
+    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
+    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
+    <p>© <span class="yr">2026</span> o2a</p>
+  </div>
+</footer>
+<script>document.querySelectorAll(".yr").forEach(function (e) { e.textContent = String(new Date().getFullYear()); });</script>
+</body>
+</html>

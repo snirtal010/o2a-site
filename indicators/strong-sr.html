@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Strong S&amp;R · o2a</title>
+<meta name="description" content="Draws the strongest support and resistance levels from higher-timeframe swings, scored by touches and fading with age.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="o2a home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="7" fill="var(--ink)"/><path d="M5 19 C9 9, 13 9, 15 15 S21 21, 25 11" fill="none" stroke="var(--vwap)" stroke-width="2.6" stroke-linecap="round"/></svg>
+      o2a
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="../index.html#indicators">Indicators</a>
+      <a href="../index.html#method">How we build</a>
+      <a href="../index.html#install">Install</a>
+      <a href="../index.html#pricing">Pricing</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+    <a class="btn primary" href="../index.html#contact">Get access</a>
+  </div>
+</header>
+<main id="top">
+
+  <section class="wrap ind-hero">
+    <p class="crumb"><a href="../index.html#indicators">Indicators</a> / Strong S&amp;R</p>
+    <span class="eyebrow">Levels</span>
+    <h1>Strong S&amp;R <span style="color:var(--muted);font-weight:600">r1.01</span></h1>
+    <p class="lede">Builds a pool of price levels from swing highs and lows on a higher timeframe (and an optional second, heavier-weighted timeframe), merges nearby levels, and scores each one every time a higher-timeframe candle touches it. Scores fade over time, so old, untested levels drop out. It shows the nearest qualifying levels above and below price, with a zone band and a label showing touches and score, and always shows at least one level above and below price. Described from the MT5 port.</p>
+    <div class="platforms"><span class="pill">TradingView</span><span class="pill">MetaTrader 5</span></div>
+    <figure class="shot"><img src="../img/strongsr.jpg" alt="Strong S&amp;R on a TradingView chart (XAUUSD)" loading="eager"><figcaption>Real TradingView chart, XAUUSD.</figcaption></figure>
+  </section>
+  <section class="band"><div class="wrap cols">
+    <div class="block"><h2 style="font-size:1.4rem">What it draws</h2><ul><li>Up to N resistance lines above price (red) and N support lines below price (green), dashed by default, extended to the right</li><li>A zone band above and below each line (width = average upper / lower wick of the last 200 HTF candles, or a fixed %)</li><li>Label per level: 'R' or 'S', price, touches and score (e.g. '[12x | 5.3w]') and source tag: H = main timeframe, X = extra timeframe, HX = both</li><li>Dotted fallback level tagged 'SPC' (spacing-based) or 'PROJ' (ATR projection) when no qualifying level exists above or below price</li></ul></div>
+    <div class="block"><h2 style="font-size:1.4rem">Signals</h2><dl class="sig"><div><dt>None</dt><dd>This indicator draws levels only; it has no buy/sell signals.</dd></div><div><dt>How a level is created and scored</dt><dd>Each time a main-timeframe candle completes: all scores are multiplied by a decay factor (they halve every 'Memory' HTF bars; levels below 0.05 are removed), every level whose zone the candle's high-low range overlaps gets +1 touch and +1 score, and a new confirmed pivot high / low (Pivot Length bars on each side) is added, or merged into an existing level within the Merge Tolerance %. Extra-timeframe candles do the same with weight 2 (no decay step). Optional: long rejection wicks (wick at least 60% of a candle at least 0.75 ATR tall) seed levels with weight 0.25.</dd></div><div><dt>Which levels are shown</dt><dd>Levels with score at or above Min Score; the nearest 'Levels Above' above the current price and the nearest 'Levels Below' below it.</dd></div><div><dt>Fallback level</dt><dd>If no qualifying level exists on one side, a dotted level is projected beyond price (at least 0.5 ATR away), stepped by the average spacing of the last 10 levels ('SPC') or by 3 x HTF ATR ('PROJ'), and moved further out only when price reaches it.</dd></div></dl></div>
+  </div></section>
+  <section class="band"><div class="wrap" style="display:grid;gap:24px">
+    <div class="block"><h2 style="font-size:1.4rem">Main settings</h2><div class="tbl"><table><thead><tr><th>Setting</th><th>Default</th><th>What it does</th></tr></thead><tbody><tr><td>Timeframe</td><td>H1</td><td>Main timeframe whose swings and touches build the levels.</td></tr><tr><td>+ Extra TF / Extra TF</td><td>on / H4</td><td>Second timeframe; its touches and pivots weigh 2x.</td></tr><tr><td>Pivot Length</td><td>8</td><td>Bars on each side a swing high / low must beat.</td></tr><tr><td>Min Score</td><td>2.0</td><td>Minimum score for a level to be shown.</td></tr><tr><td>Merge Tolerance %</td><td>0.5</td><td>Pivots within this % of an existing level are merged into it.</td></tr><tr><td>Memory (bars, 0 = never fade)</td><td>100</td><td>Score half-life in main-timeframe bars.</td></tr><tr><td>Create levels from rejection wicks</td><td>off</td><td>Seeds weak levels from long wicks.</td></tr><tr><td>Always show a level above &amp; below price</td><td>on</td><td>Enables the SPC / PROJ fallback level.</td></tr><tr><td>Levels Above / Levels Below</td><td>5 / 5</td><td>How many levels to draw on each side.</td></tr><tr><td>Zone Width</td><td>Avg Wick</td><td>Zone band from the average HTF wick (200 bars) or a % of price (0.03%).</td></tr></tbody></table></div></div>
+    <div class="cols">
+      <div class="block"><h2 style="font-size:1.4rem">Timeframes</h2><p>Main timeframe (MT5 default H1) plus optional extra timeframe (MT5 default H4); levels are drawn on any chart timeframe.</p><h2 style="font-size:1.4rem">Alerts</h2><p>MT5 port: none. TradingView original: unclear (Pine source not available).</p></div>
+      <div class="block"><h2 style="font-size:1.4rem">Closed candles and repainting</h2><ul><li>Emulates request.security with lookahead off: on closed chart bars the levels use the last completed HTF bar; the live chart bar sees the still-forming HTF bar (option 'Count the forming HTF bar', default on), worked on a copy, so the displayed levels can change until the HTF bar closes.</li><li>Pivots are confirmed Pivot Length HTF bars after the swing.</li><li>Level scores depend on the full history processed, and the fallback level is anchored from the start of the calculation, so results depend on how much history is loaded.</li></ul></div>
+    </div>
+    <div class="block"><h2 style="font-size:1.4rem">On MetaTrader 5</h2><ul><li>The Pine file htf_strong_sr.pine is a different indicator ('HTF Strong S&amp;R + ZigZag + FBO + Fib + KillZones [o2a v5.3]', with min-touch counts, ZigZags, DT/DB detection and kill zones) and was not used for this description.</li><li>MT5 defaults are the author's live TradingView chart settings (2026-10-07).</li><li>MT5-only: mid price option (bid + half spread), calculation start time or bar count (default 40,000 chart bars), option to count the forming HTF bar, optional debug print.</li><li>Zones are drawn as solid rectangles blended with the background; labels sit 3 bars to the right of the last bar (visible with MT5's chart shift on).</li></ul></div>
+    <div><a class="btn primary" href="../index.html#contact">Get access</a> <a class="btn ghost" href="../index.html#indicators">All indicators</a></div>
+  </div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:1.1rem">o2a</div>
+    <nav aria-label="Legal">
+      <a href="../legal/terms.html">Terms of use</a>
+      <a href="../legal/privacy.html">Privacy policy</a>
+      <a href="../legal/refunds.html">Refund policy</a>
+      <a href="../legal/risk.html">Risk disclaimer</a>
+    </nav>
+    <p class="risk"><b>Risk notice.</b> Trading leveraged products such as CFDs, forex and futures carries a high risk of loss and is not suitable for everyone. o2a indicators are analysis tools; they do not give financial advice and do not guarantee any result. Past signals, backtests and screenshots do not predict future performance.</p>
+    <p>TradingView is a trademark of TradingView, Inc. MetaTrader 5 is a trademark of MetaQuotes Ltd. o2a is not affiliated with either.</p>
+    <p>© <span class="yr">2026</span> o2a</p>
+  </div>
+</footer>
+<script>document.querySelectorAll(".yr").forEach(function (e) { e.textContent = String(new Date().getFullYear()); });</script>
+</body>
+</html>
